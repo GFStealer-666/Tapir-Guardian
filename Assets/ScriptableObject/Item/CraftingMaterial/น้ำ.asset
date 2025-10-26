@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fbe4c2c04256674a92f10103c565ba1, type: 3}
+  m_Name: "\u0E19\u0E49\u0E33"
+  m_EditorClassIdentifier: 
+  Id: CraftingMaterial_1
+  DisplayName: "\u0E19\u0E49\u0E33"
+  Icon: {fileID: 21300000, guid: bac438f37e3c17847ab8b5649e734843, type: 3}
+  Kind: 5
+  stackable: 1
+  maxStack: 999
+  description: "\u0E19\u0E49\u0E33"
+  category: Herb
+  tags: Herb

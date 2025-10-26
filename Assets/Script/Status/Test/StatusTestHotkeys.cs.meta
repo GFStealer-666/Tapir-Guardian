@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6d069b74f1d61c8498a6a1d24d8e71ea
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - target: {instanceID: 0}
+  - poison: {fileID: 11400000, guid: c86b41573f395544baf27237e5f8e470, type: 2}
+  - slow: {fileID: 11400000, guid: 8c5fba4d5de1d6f458927419599946b1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
