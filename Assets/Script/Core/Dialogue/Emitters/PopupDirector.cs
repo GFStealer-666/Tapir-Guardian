@@ -73,7 +73,9 @@ public class PopupDirector : MonoBehaviour
         _current = next;
 
         presenter?.ShowNow(next);
-        StartCoroutine(RunTimer(next.Duration));
+
+        if (!next.IsPersistent)
+            StartCoroutine(RunTimer(next.Duration));
     }
 
     private System.Collections.IEnumerator RunTimer(float seconds)

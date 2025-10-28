@@ -116,10 +116,11 @@ public class WeaponDriver : MonoBehaviour
             gun.damage,
             dir * gun.bulletSpeed,
             gameObject,
-            -1f,            // use bullet default life
+            -1f,
             hitMask
         );
     }
+
 
     // -------------------------
     // MELEE LOGIC (SideHand fallback)

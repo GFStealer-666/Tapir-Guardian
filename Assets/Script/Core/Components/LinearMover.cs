@@ -69,7 +69,7 @@ public class LinearMover : MonoBehaviour, IMover2D
         isGrounded = false; 
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         Vector2 p = (Vector2)transform.position + groundCheckOffset;
         return Physics2D.OverlapCircle(p, groundCheckRadius, groundMask);

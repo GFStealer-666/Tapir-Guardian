@@ -24,8 +24,6 @@ public abstract class BaseInteractable : MonoBehaviour, IInteractable
     }
 
     public float MaxRange => maxRange;
-
-    // ---- Registry handling ----
     protected virtual void OnEnable()
     {
         InteractableRegistry.Register(this);
@@ -37,7 +35,6 @@ public abstract class BaseInteractable : MonoBehaviour, IInteractable
         InteractableRegistry.Unregister(this);
     }
 
-    // Call this from your child class *after* doing its own logic
     protected void RaiseEvents(PlayerBrain player)
     {
         // UnityEvent (Inspector stuff)

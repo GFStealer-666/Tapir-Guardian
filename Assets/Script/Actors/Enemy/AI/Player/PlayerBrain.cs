@@ -16,13 +16,24 @@ public class PlayerBrain : MonoBehaviour
     [SerializeField] private HotbarComponent hotbar;
 
     [Header("Interact")]
-    [SerializeField] private InteractionScanner scanner; // <-- NEW
+    [SerializeField] private InteractionScanner scanner;
 
     [Header("Control Lock")]
-    [SerializeField] private PlayerControlLock controlLock; // <-- NEW
+    [SerializeField] private PlayerControlLock controlLock;
+    [Header("Audio")]
+    [SerializeField] private PlayerAudioSoundEffect sfx;
+
+    [Header("Footstep Settings")]
+    [SerializeField, Min(0.05f)] private float baseStepInterval = 0.45f; // seconds at 1.0 speed
+    [SerializeField, Min(0.01f)] private float minStepInterval = 0.22f;  // clamp floor
+    [SerializeField, Min(0.01f)] private float speedForFastestSteps = 9f; // speed where interval hits min
+
+    private float _stepTimer;
 
     private void Awake()
     {
+        if (!sfx) sfx = GetComponent<PlayerAudioSoundEffect>() ?? GetComponentInChildren<PlayerAudioSoundEffect>();
+
         input = inputReaderBehaviour as IInputReader;
 
         if (!weaponDriver) weaponDriver = GetComponent<WeaponDriver>() ?? GetComponentInChildren<WeaponDriver>();
@@ -49,7 +60,7 @@ public class PlayerBrain : MonoBehaviour
             var d = s.Move;
             if (d.sqrMagnitude > 1f) d.Normalize();
             mover?.Move(new Vector2(d.x, 0f));
-            if (s.JumpPressed)  mover?.Jump();
+            if (s.JumpPressed) mover?.Jump();
             if (s.BlockPressed) blocker?.TryBlock();
 
             // Facing for shots/melee arcs
@@ -81,7 +92,100 @@ public class PlayerBrain : MonoBehaviour
                 target.Interact(this);
             }
         }
+        // Cache a typed mover so we can read IsGrounded and velocity (optional)
+        var linearMover = mover as LinearMover;
+
+        // Jump — play sound only if we were grounded when the jump button is pressed
+        if (!controlLock || !controlLock.InputBlocked)
+        {
+            var d = s.Move;
+            if (d.sqrMagnitude > 1f) d.Normalize();
+
+            // Move
+            mover?.Move(new Vector2(d.x, 0f));
+
+            // Jump + sound
+            if (s.JumpPressed)
+            {
+                if (linearMover == null || linearMover.IsGrounded()) // if we can check grounding, ensure grounded
+                    sfx?.PlayJump();
+                mover?.Jump();
+            }
+
+            if (s.BlockPressed) blocker?.TryBlock();
+
+            // Facing for shots/melee arcs
+            weaponDriver?.UpdateFacingFromInput(d);
+
+            // Attack
+            if (s.ShootPressed || s.ShootHeld)
+                weaponDriver?.TryAttack();
+
+            // ---- Footstep cadence ----
+            HandleFootsteps(d, linearMover);
+        }
+        else
+        {
+            // when locked, force no movement
+            mover?.Move(Vector2.zero);
+            _stepTimer = 0f; // reset cadence when control is locked
+        }
+
+        // Interact (press E)
+        if (s.InteractPressed)
+        {
+            var target = scanner ? scanner.Current : null;
+            if (target != null && target.CanInteract())
+            {
+                target.Interact(this);
+            }
+        }
+
     }
+    
+    private void HandleFootsteps(Vector2 inputDir, LinearMover lm)
+{
+    // Must be grounded and moving horizontally to produce steps
+    if (!lm || !lm.IsGrounded())
+    {
+        _stepTimer = 0f;
+        return;
+    }
+
+    // Horizontal speed estimate: prefer rigidbody velocity if available for better feel
+    float absVx = 0f;
+    if (lm)
+    {
+        // Uses rb.linearVelocityX from LinearMover's FixedUpdate result
+        absVx = Mathf.Abs(lm.GetComponent<Rigidbody2D>().linearVelocityX);
+    }
+    else
+    {
+        // Fallback if mover is not LinearMover: estimate from input
+        absVx = Mathf.Abs(inputDir.x);
+    }
+
+    // Not moving enough? no steps.
+    const float moveThreshold = 0.05f;
+    if (absVx <= moveThreshold)
+    {
+        _stepTimer = 0f;
+        return;
+    }
+
+    // Map speed to step interval
+    // Faster speed → shorter interval, clamped by minStepInterval
+    float t = Mathf.InverseLerp(0f, Mathf.Max(speedForFastestSteps, 0.01f), absVx);
+    float interval = Mathf.Lerp(baseStepInterval, minStepInterval, t);
+
+    _stepTimer -= Time.deltaTime;
+    if (_stepTimer <= 0f)
+    {
+        sfx?.PlayWalkStep();
+        _stepTimer = interval;
+    }
+}
+
 
     // Public so UI can freeze/unfreeze player
     public void SetInputBlocked(bool blocked)

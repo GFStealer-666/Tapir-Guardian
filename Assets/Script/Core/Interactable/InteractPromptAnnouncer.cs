@@ -6,44 +6,46 @@ public class InteractPromptAnnouncer : MonoBehaviour
     [SerializeField] private PopupDirector popupDirector;
 
     [Header("Popup Settings")]
-    [SerializeField] private PopupCategory category = PopupCategory.Notification; // whatever you use in PopupRequest
+    [SerializeField] private PopupCategory category = PopupCategory.Notification;
     [SerializeField] private int priority = 5;
-    [SerializeField] private float defaultDuration = 2f;
 
-    // cache so we don't spam enqueue with the same message every frame
     private IInteractable _lastShownFor;
     private string _lastPrompt;
+    private bool _promptActive;
 
-    // Called by scanner when closest interactable changes
     public void ShowPromptFor(IInteractable interactable)
     {
-        if (interactable == null)
+        if (interactable == null || !interactable.CanInteract())
         {
-            // target gone: clear state and optionally show nothing
+            if (_promptActive)
+            {
+                popupDirector?.ClearAll(); // or make a specific HidePrompt() if you prefer
+                _promptActive = false;
+            }
+
             _lastShownFor = null;
             _lastPrompt = null;
             return;
         }
 
-        if (!interactable.CanInteract()) return;
-
         var prompt = interactable.GetPrompt();
         if (string.IsNullOrWhiteSpace(prompt)) return;
 
-        // only enqueue if it's different from last seen
         if (interactable == _lastShownFor && prompt == _lastPrompt) return;
 
         _lastShownFor = interactable;
         _lastPrompt = prompt;
+        _promptActive = true;
 
-        var req = new PopupRequest(prompt, defaultDuration, category, priority);
+        var req = new PopupRequest(prompt, 9999f, category, priority, true); // 👈 persistent
         popupDirector?.Enqueue(req);
     }
 
-    // Optional helper if you ever want to force-hide externally
     public void ClearPrompt()
     {
         _lastShownFor = null;
         _lastPrompt = null;
+        _promptActive = false;
+        popupDirector?.ClearAll();
     }
 }

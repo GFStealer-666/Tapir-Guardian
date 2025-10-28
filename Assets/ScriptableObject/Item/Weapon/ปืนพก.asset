@@ -19,9 +19,10 @@ MonoBehaviour:
   stackable: 1
   maxStack: 1
   kind: 1
+  weaponSound: {fileID: 8300000, guid: e7389d7d06614ad43b0eb800ed46bd63, type: 3}
   damage: 40
   fireCooldown: 1
-  bulletSpeed: 12
+  bulletSpeed: 36
   ammoItemId: Ammo_1
   ammoPerShot: 1
   bulletPrefab: {fileID: 5535120845612903208, guid: 185ec5551bba69e41a608563408ec42a, type: 3}

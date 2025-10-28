@@ -1,14 +1,13 @@
 using UnityEngine;
-using TMPro;
 
-public class NPCInteractable : BaseInteractable
+public class JailInteractable : BaseInteractable
 {
-    [Header("NPC Info")]
-    [SerializeField] private string npcName = "???";
+    [Header("Jail Info")]
     [SerializeField] private ConversationEmitter conversationEmitter;
+    [SerializeField] private AnimalDataUnlocker animalDataUnlocker;
     [SerializeField] private Collider2D interactionCollider;
-    [SerializeField] private bool oneTimeDialogue = false;
-    private int _lineIndex = 0;
+    [SerializeField] private GameObject jailOpen, jailClosed;
+    [SerializeField] private bool oneTimePrompt = false;
     private PlayerBrain _cachedPlayer;
     void Awake()
     {
@@ -23,28 +22,32 @@ public class NPCInteractable : BaseInteractable
 
     public override string GetPrompt()
     {
-        return $"กด E เพื่อคุยกับ {npcName}";
+        return $"กด E เพื่อปล่อย {animalDataUnlocker.animalToUnlock.name}";
     }
 
     public override void Interact(PlayerBrain player)
     {
-        Debug.Log($"Interacting with NPC: {npcName}");
+        Debug.Log($"Interacting with Jail: {animalDataUnlocker.animalToUnlock.name}");
+
         _cachedPlayer = player;
         player.SetInputBlocked(true);
         RaiseEvents(player);
         conversationEmitter.StartConversation();
         float duration = conversationEmitter.GetConversationDuration();
+        animalDataUnlocker.UnlockNow();
+
+        jailOpen.SetActive(true);
+        jailClosed.SetActive(false);
+
         Invoke(nameof(EndDialogue), duration);
 
-        if (oneTimeDialogue)
+        if (oneTimePrompt)
         {
             this.enabled = false;
-            conversationEmitter.enabled = false;
             interactionCollider.enabled = false;
         }
     }
 
-    // Hook this to UI "Close" button
     public void EndDialogue()
     {
 

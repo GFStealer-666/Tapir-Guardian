@@ -19,10 +19,11 @@ MonoBehaviour:
   stackable: 1
   maxStack: 1
   kind: 1
+  weaponSound: {fileID: 0}
   damage: 100
   fireCooldown: 1
   bulletSpeed: 24
-  ammoItemId: Ammo_1
+  ammoItemId: Ammo_2
   ammoPerShot: 1
   bulletPrefab: {fileID: 5535120845612903208, guid: 659eba11cb76b6a428235e7c7b5bd92f, type: 3}
   muzzleLocalOffset: {x: 0.5, y: 0.2}

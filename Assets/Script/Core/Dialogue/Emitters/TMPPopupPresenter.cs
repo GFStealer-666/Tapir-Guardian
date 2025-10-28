@@ -6,13 +6,13 @@ using System.Collections;
 public class TMPPopupPresenter : MonoBehaviour, IPopupPresenter
 {
     [Header("Refs")]
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField] private TextMeshProUGUI promptLabel;
     [SerializeField] private CanvasGroup canvasGroup;
 
     [Header("Animation")]
     [SerializeField, Min(0.001f)] private float fadeIn = 0.15f;
     [SerializeField, Min(0.001f)] private float fadeOut = 0.15f;
-    [SerializeField, Min(0.001f)] private float charInterval = 0.03f;
+    [SerializeField, Min(0.0f)] private float charInterval = 0.0f;
 
     [Header("Sound")]
     [SerializeField] private AudioSource audioSource;
@@ -32,8 +32,8 @@ public class TMPPopupPresenter : MonoBehaviour, IPopupPresenter
     {
         if (!canvasGroup) canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup) canvasGroup.alpha = 0f;
-        if (label) label.text = "";
-        label.text = label.GetParsedText();
+        if (promptLabel) promptLabel.text = "";
+        promptLabel.text = promptLabel.GetParsedText();
         if (!audioSource && typeSound)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -74,13 +74,18 @@ public class TMPPopupPresenter : MonoBehaviour, IPopupPresenter
 
     private IEnumerator TypeText(string text)
     {
-        if (!label) yield break;
-        label.text = "";
+        if (!promptLabel) yield break;
+        promptLabel.text = "";
         int charCount = 0;
         
+        if (charInterval <= 0f)
+        {
+            promptLabel.text = text;
+            yield break;
+        }
         foreach (char c in text)
         {
-            label.text += c;
+            promptLabel.text += c;
             charCount++;
             
             if (useSound && typeSound && audioSource && charCount % soundEveryNChars == 0)
