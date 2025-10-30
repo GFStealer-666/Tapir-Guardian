@@ -3,6 +3,9 @@ using UnityEngine;
 public class PlayerAudioSoundEffect : MonoBehaviour
 {
     public AudioSource audioSource;
+    [Header("Script References")]
+    [SerializeField] private WeaponDriver weaponDriver;
+    [Header("Sound Effects")]
     [SerializeField] private AudioClip walkSound;
     [SerializeField] private AudioClip damagedSound;
     [SerializeField] private AudioClip diedSound;
@@ -13,7 +16,7 @@ public class PlayerAudioSoundEffect : MonoBehaviour
 
     private void OnEnable()
     {
-
+        
     }
 
     private void OnDisable()
@@ -26,9 +29,14 @@ public class PlayerAudioSoundEffect : MonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
         }
+        if (weaponDriver == null)
+        {
+            weaponDriver = GetComponentInChildren<WeaponDriver>();
+        }
     }
     public void PlaySoundEffect(AudioClip clip)
     {
+        
         if (clip != null && audioSource != null)
         {
             audioSource.PlayOneShot(clip);
@@ -42,6 +50,10 @@ public class PlayerAudioSoundEffect : MonoBehaviour
         audioSource.pitch = p;
         audioSource.PlayOneShot(walkSound);
         audioSource.pitch = 1f; // reset
+    }
+    public void PlayWeaponSound(AudioClip clip)
+    {
+        PlaySoundEffect(clip);
     }
 
     public void PlayJump()

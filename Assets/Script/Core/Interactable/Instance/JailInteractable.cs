@@ -30,7 +30,6 @@ public class JailInteractable : BaseInteractable
         Debug.Log($"Interacting with Jail: {animalDataUnlocker.animalToUnlock.name}");
 
         _cachedPlayer = player;
-        player.SetInputBlocked(true);
         RaiseEvents(player);
         conversationEmitter.StartConversation();
         float duration = conversationEmitter.GetConversationDuration();
@@ -50,8 +49,5 @@ public class JailInteractable : BaseInteractable
 
     public void EndDialogue()
     {
-
-        if (_cachedPlayer)
-            _cachedPlayer.SetInputBlocked(false);
     }
 }

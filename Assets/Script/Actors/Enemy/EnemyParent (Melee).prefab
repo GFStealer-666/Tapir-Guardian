@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3422089119405657033}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemyAttackOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2846380857095810940}
   - component: {fileID: 2417652742990934553}
   - component: {fileID: 7827152013121254057}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemyStat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1517017863307740109}
   - component: {fileID: 3233380005484787800}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemySprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: 9125e89ef12e9e04fa4fc41829a40123, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 7702740803266992588}
   - component: {fileID: 1561733536487206304}
   - component: {fileID: 4868302062840603626}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemyParent (Melee)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ Rigidbody2D:
   m_Mass: 6.050829
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.98
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -279,7 +279,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 6
 --- !u!114 &6510757689590320329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,7 +415,7 @@ MonoBehaviour:
   attackOrigin: {fileID: 3422089119405657033}
   localOffset: {x: 0, y: 0}
   attack: 12
-  range: 0.48
+  range: 0.56
   cooldown: 0.8
   targetMask:
     serializedVersion: 2
@@ -446,7 +446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7613562130159398861}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemyUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}

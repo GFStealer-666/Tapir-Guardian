@@ -18,7 +18,7 @@ public class LinearMover : MonoBehaviour, IMover2D
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Vector2 groundCheckOffset = new(0f, -0.55f);
     [SerializeField] private float groundCheckRadius = 0.12f;
-
+    public Vector2 CurrentVelocity => rb ? rb.linearVelocity : Vector2.zero;
     private Rigidbody2D rb;
     private Vector2 wantedDir;
     [SerializeField] private bool isGrounded;

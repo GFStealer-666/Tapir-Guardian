@@ -29,8 +29,13 @@ public class HealthComponent : MonoBehaviour, IHealth,IConfigurableHealth
         if (amount <= 0 || currentHealth <= 0) return;
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        if (currentHealth <= 0) OnDied?.Invoke();
-        Debug.Log("Died");
+        Debug.Log($"{gameObject.name} took {amount} damage. Current HP = {currentHealth}/{maxHealth}");
+        if (currentHealth <= 0)
+        {
+            OnDied?.Invoke();
+            Debug.Log($"{gameObject.name} has died.");
+        }
+
     }
     public void Heal(int amount)
     {

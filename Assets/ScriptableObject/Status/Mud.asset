@@ -18,10 +18,10 @@ MonoBehaviour:
   kind: 1
   tags:
   - Mud
-  duration: 0.8
-  tickInterval: 0.8
+  duration: 99999
+  tickInterval: 0
   magnitude: 0.4
-  stackPolicy: 1
+  stackPolicy: 0
   maxStacks: 1
   dispellable: 1
   showOnStatusBar: 1

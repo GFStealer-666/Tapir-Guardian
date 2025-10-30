@@ -3,17 +3,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewGunWeapon", menuName = "Tapir/Weapon/Gun")]
 public class WeaponGunSO : WeaponSO
 {
-    [Header("Gun Stats")]
-    public int damage = 4;
-    public float fireCooldown = 0.2f;
+    [Header("Ranged Stats")]
+    public int damage = 8;
+    public float shootCooldown = 0.35f;
+    public float windUp = 0.08f;
+    public bool useAnimationEvent = true;
+
+    [Header("Projectile")]
+    public GameObject bulletPrefab;
     public float bulletSpeed = 12f;
-
-    [Header("Ammo")]
-    public string ammoItemId;   // e.g. "9mm"
-    public int ammoPerShot = 1;
-
-    [Header("Bullet Prefab")]
-    public Bullet bulletPrefab;
+    public LayerMask hitMask = ~0;
 
     [Header("Muzzle offset")]
     public Vector2 muzzleLocalOffset = new Vector2(0.5f, 0.2f);

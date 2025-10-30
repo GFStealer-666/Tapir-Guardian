@@ -10,10 +10,12 @@ public class HerbPickupTrigger : MonoBehaviour
 {
     [Header("Herb Data")]
     public HerbDataSO herb;
+    public ItemSO herbItem;
 
     [Header("References")]
     public HerbPopupView popup;              // link to your popup prefab/panel in the scene
     public string playerTag = "Player";
+    [SerializeField] private InventoryComponent inventoryComponent;
 
     [Header("Behavior")]
     public bool disableAfterPickup = true;   // hide pickup after being triggered
@@ -33,7 +35,7 @@ public class HerbPickupTrigger : MonoBehaviour
             Debug.LogWarning("[HerbPickupTrigger] No HerbPopupView found!");
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Pickup(Collider2D other)
     {
         if (!herb || !other.CompareTag("Player"))
             return;
@@ -56,6 +58,8 @@ public class HerbPickupTrigger : MonoBehaviour
 
         if (disableAfterPickup && playOnlyOnce)
             gameObject.SetActive(false);
+
+        inventoryComponent.Add(herbItem.Id , 1);
     }
 
     private void ShowPopupAndUnlock()

@@ -20,7 +20,7 @@ public class EnemyInstaller : MonoBehaviour
 
         // ---- Health from config ----
         // Preferred: your Health implements a tiny "configuration" interface
-        if (root.Ihealth is IConfigurableHealth cfgHealth)
+        if (root.health is IConfigurableHealth cfgHealth)
         {
             cfgHealth.SetMax(config.MaxHealth, fillHealthOnApply);
         }

@@ -1,214 +1,178 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class WeaponDriver : MonoBehaviour
 {
+    [Header("Data")]
+    public WeaponSO mainHand;              // assign a Melee or Ranged SO
+    public WeaponSO sideHand;              // optional second weapon
+
     [Header("Refs")]
-    [SerializeField] private EquipmentComponent equipment;
-    [SerializeField] private InventoryComponent inventory;
-    [SerializeField] private Transform attackOrigin; // melee origin (torso/hand)
-    [SerializeField] private Transform muzzleOrigin; // gun muzzle
-    [SerializeField] private LayerMask hitMask;      // what we can damage
-    [SerializeField] private PlayerAudioSoundEffect audioEffect;
+    [SerializeField] private PlayerAnimator2D anim2D;  
+    [SerializeField] private PlayerAudioSoundEffect sfx;
+    [SerializeField] private Transform meleeOrigin;   
+    [SerializeField] private Transform firePoint;
 
-    [Header("Facing")]
-    [SerializeField] private bool useScaleForFacing = false;
-    private float lastFacingX = 1f;
+    public event Action OnMeleeStarted;
+    public event Action OnMeleeImpact;
+    public event Action OnRangedStarted;
+    public event Action OnRangedFired;
 
-    // Separate cooldowns
-    private float _nextGunTime = 0f;
-    private float _nextMeleeTime = 0f;
+    bool _busy;
+    float _nextTime;
 
-    private void Awake()
+    // animation-event latches
+    bool _meleeImpactEvent;
+    bool _rangedFireEvent;
+
+    // replace _nextTime with per-weapon map
+    private readonly System.Collections.Generic.Dictionary<WeaponSO, float> _readyAt =
+        new System.Collections.Generic.Dictionary<WeaponSO, float>();
+
+    private float GetReadyAt(WeaponSO w) => _readyAt.TryGetValue(w, out var t) ? t : 0f;
+    private void  SetReadyAfter(WeaponSO w, float cd) => _readyAt[w] = Time.time + Mathf.Max(0f, cd);
+
+    public bool TryUse(WeaponSO w)
     {
-        if (!equipment) equipment = GetComponent<EquipmentComponent>() ?? GetComponentInParent<EquipmentComponent>();
-        if (!inventory) inventory = GetComponent<InventoryComponent>() ?? GetComponentInParent<InventoryComponent>();
+        if (!w) return false;
+        if (_busy) return false;
+        if (Time.time < GetReadyAt(w)) return false;
 
-        if (!attackOrigin) attackOrigin = transform;
-        if (!muzzleOrigin) muzzleOrigin = transform;
+        switch (w.kind)
+        {
+            case WeaponKind.Melee:
+                StartCoroutine(MeleeRoutine((WeaponMeleeSO)w));
+                return true;
+
+            case WeaponKind.Gun:
+                // optional: if you track ammo, gate here (return false when no ammo)
+                // if (!HasAmmo((WeaponGunSO)w)) return false;
+                StartCoroutine(RangedRoutine((WeaponGunSO)w));
+                return true;
+        }
+        return false;
     }
 
-    public void UpdateFacingFromInput(Vector2 move)
+    public void TryUseMain()
     {
-        if (!useScaleForFacing && Mathf.Abs(move.x) > 0.01f)
-            lastFacingX = Mathf.Sign(move.x);
+        // try main; if it couldn't start (cooldown/busy/no ammo), fall back to side
+        if (!TryUse(mainHand))
+            TryUse(sideHand);
+    }
 
-        if (useScaleForFacing)
+    public void TryUseSide() => TryUse(sideHand);
+    public void Anim_MeleeImpact() => _meleeImpactEvent = true;
+    public void Anim_RangedFire()  => _rangedFireEvent  = true;
+
+    // === Coroutines ===
+    private IEnumerator MeleeRoutine(WeaponMeleeSO w)
+    {
+        _busy = true;
+        OnMeleeStarted?.Invoke();
+
+        if (w.useAnimationEvent) { _meleeImpactEvent = false; float t=0, timeout=1.5f;
+            while(!_meleeImpactEvent && (t+=Time.deltaTime)<timeout) yield return null;
+        } else {
+            yield return new WaitForSeconds(w.windUp);
+        }
+
+        DoMelee(w);
+        OnMeleeImpact?.Invoke();
+
+        SetReadyAfter(w, w.attackCooldown);
+        _busy = false;
+    }
+
+    private IEnumerator RangedRoutine(WeaponGunSO w)
+    {
+        _busy = true;
+        OnRangedStarted?.Invoke();
+
+        if (w.useAnimationEvent) { _rangedFireEvent=false; float t=0, timeout=1.5f;
+            while(!_rangedFireEvent && (t+=Time.deltaTime)<timeout) yield return null;
+        } else {
+            yield return new WaitForSeconds(w.windUp);
+        }
+
+        DoShoot(w);
+        OnRangedFired?.Invoke();
+
+        SetReadyAfter(w, w.shootCooldown);
+        _busy = false;
+    }
+
+    // === Actions ===
+    void DoMelee(WeaponMeleeSO w)
+    {
+        Debug.Log("WeaponDriver DoMelee");
+        Transform t = meleeOrigin ? meleeOrigin : transform;
+        // flip-aware origin (so offsets work for left/right)
+        int sign = anim2D ? anim2D.FacingSign : 1;
+        Vector2 local = w.swingLocalOffset;
+        local.x *= sign;
+        Vector2 origin = (Vector2)t.TransformPoint(local);
+
+        var hits = Physics2D.OverlapCircleAll(origin, w.swingRadius, w.hitMask);
+        if (hits == null)
         {
-            float sx = transform.localScale.x;
-            if (Mathf.Abs(sx) > 0.0001f)
-                lastFacingX = Mathf.Sign(sx);
+            Debug.Log("Melee hit nothing");
+            return;
+        }
+
+        foreach (var h in hits)
+        {
+            Debug.Log($"Melee hit {h.gameObject.name}");
+            var receiver = h.GetComponentInChildren<DamageReceiver>();
+            sfx.PlayWeaponSound(w.weaponSound); 
+            var data = new DamageData(w.damage, DamageType.Melee, gameObject, true);
+            receiver.ReceiveDamage(data);
         }
     }
 
-    public void TryAttack()
+    void DoShoot(WeaponGunSO w)
     {
-        Debug.Log("WeaponDriver TryAttack");
-        bool didShoot = TryGunAttack();
-        if (didShoot) return;
+        if (!w.bulletPrefab || !firePoint) return;
 
-        TryMeleeAttack();
-    }
+        int sign = anim2D ? anim2D.FacingSign : 1;
+        Vector2 dir = (sign >= 0) ? Vector2.right : Vector2.left;
 
-    // -------------------------
-    // GUN LOGIC (MainHand)
-    // -------------------------
-    private bool TryGunAttack()
-    {
-        var main = equipment ? equipment.Get(EquipSlot.MainHand) as WeaponSO : null;
-        var gunData = main as WeaponGunSO;
-        if (!gunData) return false;
-
-        // cooldown check
-        if (Time.time < _nextGunTime) return false;
-
-        // ammo check
-        if (!CanSpendAmmo(gunData))
+        var go = Instantiate(w.bulletPrefab, firePoint.position, Quaternion.identity);
+        var b = go.GetComponent<Bullet>();
+        if (b)
         {
-            return false; // no ammo -> will fallback melee in TryAttack()
-        }
-
-        // spawn bullet
-        FireBullet(gunData);
-
-        // spend ammo
-        SpendAmmo(gunData);
-
-        // set cooldown
-        _nextGunTime = Time.time + gunData.fireCooldown;
-        audioEffect?.PlaySoundEffect(gunData.weaponSound);
-        // TODO play muzzle flash anim/sfx
-        return true;
-    }
-
-    private bool CanSpendAmmo(WeaponGunSO gun)
-    {
-        // gun with no ammo type is treated as "infinite ammo"
-        if (string.IsNullOrEmpty(gun.ammoItemId)) return true;
-        if (!inventory) return false;
-        return inventory.Has(gun.ammoItemId, gun.ammoPerShot);
-    }
-
-    private void SpendAmmo(WeaponGunSO gun)
-    {
-        if (string.IsNullOrEmpty(gun.ammoItemId)) return;
-        if (!inventory) return;
-        inventory.Consume(gun.ammoItemId, gun.ammoPerShot);
-    }
-
-    private void FireBullet(WeaponGunSO gun)
-    {
-        if (!gun.bulletPrefab) return;
-
-        // where is muzzle in world?
-        Vector2 basePos = muzzleOrigin
-            ? (Vector2)muzzleOrigin.TransformPoint(Vector3.zero)
-            : (Vector2)transform.position;
-
-        Vector2 off = gun.muzzleLocalOffset;
-        off.x *= Mathf.Sign(lastFacingX);
-        Vector2 spawnPos = basePos + off;
-
-        Vector2 dir = (lastFacingX >= 0f) ? Vector2.right : Vector2.left;
-
-        Bullet b = Object.Instantiate(gun.bulletPrefab, spawnPos, Quaternion.identity);
-        b.Configure(
-            gun.damage,
-            dir * gun.bulletSpeed,
-            gameObject,
-            -1f,
-            hitMask
-        );
-    }
-
-
-    // -------------------------
-    // MELEE LOGIC (SideHand fallback)
-    // -------------------------
-    private void TryMeleeAttack()
-    {
-        var side = equipment ? equipment.Get(EquipSlot.SideHand) as WeaponSO : null;
-        var meleeData = side as WeaponMeleeSO;
-
-        if (meleeData)
-        {
-            TryDoMelee(meleeData.damage,
-                       meleeData.swingRadius,
-                       meleeData.swingLocalOffset,
-                       meleeData.attackCooldown,
-                       canBeBlocked: true);
+            b.Configure(w.damage, dir * w.bulletSpeed, gameObject, -1f, w.hitMask);
+            sfx.PlayWeaponSound(w.weaponSound);
         }
         else
         {
-            // fallback fists if somehow no melee in SideHand
-            TryDoMelee(
-                damage: 5,
-                radius: 1.0f,
-                localOffset: new Vector2(0.6f, 0f),
-                cooldown: 0.4f,
-                canBeBlocked: true
-            );
+            var rb = go.GetComponent<Rigidbody2D>();
+            if (rb) rb.linearVelocity = dir * w.bulletSpeed;
         }
-        audioEffect?.PlaySoundEffect(meleeData.weaponSound);
     }
 
-    private void TryDoMelee(int damage, float radius, Vector2 localOffset, float cooldown, bool canBeBlocked)
-    {
-        // cooldown check
-        if (Time.time < _nextMeleeTime) return;
-
-        // position of swing
-        Vector2 basePos = attackOrigin
-            ? (Vector2)attackOrigin.TransformPoint(Vector3.zero)
-            : (Vector2)transform.position;
-
-        Vector2 off = localOffset;
-        off.x *= Mathf.Sign(lastFacingX);
-
-        Vector2 center = basePos + off;
-
-        // hit detection
-        var cols = Physics2D.OverlapCircleAll(center, radius, hitMask);
-        foreach (var c in cols)
-        {
-            if (c && c.TryGetComponent<IDamageable>(out var d))
-            {
-                var packet = new DamageData(
-                    rawDamage: damage,
-                    type: DamageType.Melee,
-                    source: gameObject,
-                    canBeBlocked: canBeBlocked
-                );
-                d.ReceiveDamage(in packet);
-            }
-        }
-
-        // cooldown apply
-        _nextMeleeTime = Time.time + cooldown;
-
-        // TODO: play slash anim, shake cam, etc.
-    }
-
-
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        // just visualize sidehand swing because that's always available
-        if (!equipment) return;
+        if (mainHand is WeaponMeleeSO m)
+        {
+            Transform t = meleeOrigin ? meleeOrigin : transform;
+            int sign = anim2D ? anim2D.FacingSign : 1;
+            Vector2 local = m.swingLocalOffset; local.x *= sign;
+            Vector2 origin = (Vector2)t.TransformPoint(local);
 
-        var side = equipment.Get(EquipSlot.SideHand) as WeaponMeleeSO;
-        if (!side) return;
-
-        Vector2 basePos = attackOrigin
-            ? (Vector2)attackOrigin.TransformPoint(Vector3.zero)
-            : (Vector2)transform.position;
-
-        Vector2 off = side.swingLocalOffset;
-        off.x *= Mathf.Sign(lastFacingX);
-
-        Vector2 center = basePos + off;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(center, side.swingRadius);
+            Gizmos.color = new Color(1f, 0.3f, 0.2f, 0.35f);
+            const int seg = 28;
+            Vector3 prev = origin + Vector2.right * m.swingRadius;
+            for (int i = 1; i <= seg; i++)
+            {
+                float a = i * Mathf.PI * 2f / seg;
+                Vector3 next = origin + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * m.swingRadius;
+                Gizmos.DrawLine(prev, next);
+                prev = next;
+            }
+        }
     }
-
+#endif
 }

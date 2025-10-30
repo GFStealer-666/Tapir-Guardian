@@ -19,8 +19,8 @@ MonoBehaviour:
   tags:
   - Poison
   duration: 10
-  tickInterval: 10
-  magnitude: 1
+  tickInterval: 2
+  magnitude: 3
   stackPolicy: 0
   maxStacks: 1
   dispellable: 1

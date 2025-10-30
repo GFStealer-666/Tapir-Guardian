@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float maxLife = 4f;
-
+    public SpriteRenderer spriteRenderer;
     private int _damage;
     private GameObject _source;
     private LayerMask _hitMask;
@@ -13,12 +13,18 @@ public class Bullet : MonoBehaviour
 
     public void Configure(int damage, Vector2 velocity, GameObject source, float customLife, LayerMask mask)
     {
-        _damage   = damage;
-        _source   = source;
-        _hitMask  = mask;
+        _damage = damage;
+        _source = source;
+        _hitMask = mask;
 
         if (!rb) rb = GetComponent<Rigidbody2D>();
         if (rb) rb.linearVelocity = velocity;
+
+        // Make the sprite face travel direction
+        if (spriteRenderer)
+            spriteRenderer.flipX = velocity.x < 0f;
+
+        // Or, if you prefer rotation instead of flip:
 
         _deathAt = Time.time + ((customLife > 0f) ? customLife : maxLife);
     }

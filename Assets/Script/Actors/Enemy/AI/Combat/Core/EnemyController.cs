@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float fov = 110f;
     [SerializeField] private LayerMask obstacleMask;
 
+
     [Header("Patrol (optional)")]
     public Transform[] waypoints;
     [SerializeField] private float waypointTolerance = 0.2f;
@@ -169,6 +170,7 @@ public class EnemyController : MonoBehaviour
         public Attack(EnemyController c) : base(c) { }
         public override void Tick(float dt)
         {
+            Debug.Log($"{c.gameObject.name} in Attack State Tick");
             if (!c.root.Target) { c.sm.ChangeState(new Patrol(c)); return; }
 
             // face target (optional)

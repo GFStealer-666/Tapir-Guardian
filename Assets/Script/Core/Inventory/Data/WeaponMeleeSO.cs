@@ -10,7 +10,9 @@ public class WeaponMeleeSO : WeaponSO
     [Header("Hitbox Shape")]
     public float swingRadius = 1.2f;
     public Vector2 swingLocalOffset = new Vector2(0.6f, 0f);
-
+    public float windUp = 0.12f;
+    public bool useAnimationEvent = true;
+    public LayerMask hitMask = ~0;
     private void OnValidate()
     {
         kind = WeaponKind.Melee;

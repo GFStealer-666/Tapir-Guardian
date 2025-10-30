@@ -32,6 +32,7 @@ public class MeleeAttackBehaviour : MonoBehaviour,
     // ===== IEnemyAttack =====
     public bool TryAttack(Transform self, Transform target)
     {
+        Debug.Log($"{gameObject.name} MeleeAttackBehaviour TryAttack");
         if (!target || Time.time < nextAt) return false;
 
         Vector2 origin = GetOrigin(self);
@@ -45,7 +46,7 @@ public class MeleeAttackBehaviour : MonoBehaviour,
         // Optional layer check
         int layer = target.gameObject.layer;
         if ((targetMask.value & (1 << layer)) == 0) return false;
-
+        Debug.Log("Layer check passed");
         // Find IDamageable anywhere on the target hierarchy
         IDamageable d =
             target.GetComponent<IDamageable>() ??
