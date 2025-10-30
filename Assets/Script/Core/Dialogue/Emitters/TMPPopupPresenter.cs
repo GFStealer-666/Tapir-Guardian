@@ -30,6 +30,11 @@ public class TMPPopupPresenter : MonoBehaviour, IPopupPresenter
 
     private void Awake()
     {
+        if(promptLabel == null)
+        {
+            promptLabel = GetComponentInChildren<TextMeshProUGUI>();
+        }
+
         if (!canvasGroup) canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup) canvasGroup.alpha = 0f;
         if (promptLabel) promptLabel.text = "";

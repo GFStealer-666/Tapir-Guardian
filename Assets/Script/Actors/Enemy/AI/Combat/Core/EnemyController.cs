@@ -57,11 +57,11 @@ public class EnemyController : MonoBehaviour
         public virtual void OnExit() { }
         protected bool SeeTarget()
         {
-            if (!c.root || !c.root.Target) return false;
-            float dist = Vector2.Distance(c.transform.position, c.root.Target.position);
+            if (!c.root || !c.root.target) return false;
+            float dist = Vector2.Distance(c.transform.position, c.root.target.position);
             if (dist > c.sightRadius) return false;
 
-            var to = (c.root.Target.position - c.transform.position);
+            var to = (c.root.target.position - c.transform.position);
             if (Vector2.Angle(c.transform.right, to) > c.fov * 0.5f) return false;
 
             return !Physics2D.Raycast(c.transform.position, to.normalized, to.magnitude, c.obstacleMask);
@@ -117,7 +117,7 @@ public class EnemyController : MonoBehaviour
 
         public override void Tick(float dt)
         {
-            if (c.root.Target == null) { c.sm.ChangeState(new Patrol(c)); return; }
+            if (c.root.target == null) { c.sm.ChangeState(new Patrol(c)); return; }
 
             if (SeeTarget())
             {
@@ -128,7 +128,7 @@ public class EnemyController : MonoBehaviour
                     ? op.GetOrigin(c.transform)
                     : (Vector2)c.transform.position;
 
-                Vector2 tp = TargetPoint(c.root.Target, origin);
+                Vector2 tp = TargetPoint(c.root.target, origin);
                 float dist = Vector2.Distance(origin, tp);
                 float atkRange = c.rangeProv.AttackRange;
 
@@ -138,9 +138,7 @@ public class EnemyController : MonoBehaviour
                     c.sm.ChangeState(new Attack(c));
                     return;
                 }
-
-                // ✅ move toward target until within range
-                Vector2 dir = ((Vector2)c.root.Target.position - (Vector2)c.transform.position);
+                Vector2 dir = ((Vector2)c.root.target.position - (Vector2)c.transform.position);
                 if (dir.sqrMagnitude > 0.0001f)
                 {
                     dir.Normalize();
@@ -153,7 +151,7 @@ public class EnemyController : MonoBehaviour
                 c.loseTimer -= dt;
                 if (c.loseTimer <= 0f) { c.sm.ChangeState(new Patrol(c)); return; }
 
-                Vector2 dir = ((Vector2)c.root.Target.position - (Vector2)c.transform.position);
+                Vector2 dir = ((Vector2)c.root.target.position - (Vector2)c.transform.position);
                 if (dir.sqrMagnitude > 0.0001f)
                 {
                     dir.Normalize();
@@ -171,17 +169,17 @@ public class EnemyController : MonoBehaviour
         public override void Tick(float dt)
         {
             Debug.Log($"{c.gameObject.name} in Attack State Tick");
-            if (!c.root.Target) { c.sm.ChangeState(new Patrol(c)); return; }
+            if (!c.root.target) { c.sm.ChangeState(new Patrol(c)); return; }
 
             // face target (optional)
-            Vector2 to = c.root.Target.position - c.transform.position;
+            Vector2 to = c.root.target.position - c.transform.position;
             if (to.sqrMagnitude > 0.001f) c.transform.right = to.normalized;
 
             // measure from origin (hand) if available
             Vector2 origin = (c.attack is IAttackOriginProvider op) ? op.GetOrigin(c.transform)
                                                       : (Vector2)c.transform.position;
 
-            Vector2 tp = TargetPoint(c.root.Target, origin);
+            Vector2 tp = TargetPoint(c.root.target, origin);
             float dist = Vector2.Distance(origin, tp);
             float atkRange = c.rangeProv.AttackRange;
 
@@ -191,7 +189,7 @@ public class EnemyController : MonoBehaviour
                 return;
             }
 
-            bool fired = c.attack.TryAttack(c.transform, c.root.Target);
+            bool fired = c.attack.TryAttack(c.transform, c.root.target);
             if (!fired) c.root.Mover.Move(Vector2.zero);
         }
     }

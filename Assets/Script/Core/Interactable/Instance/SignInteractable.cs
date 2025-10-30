@@ -4,43 +4,48 @@ using TMPro;
 public class SignInteractable : BaseInteractable
 {
     [Header("Sign Content")]
-    [TextArea(2, 5)] [SerializeField] private string message;
     [SerializeField] private string title = "Sign";
+    [TextArea(2, 6)] [SerializeField] private string message;
 
-    [Header("UI")]
-    [SerializeField] private GameObject signPanel;
-    [SerializeField] private TMP_Text titleText;
-    [SerializeField] private TMP_Text bodyText;
+    [Header("UI (assign your panel + texts)")]
+    [SerializeField] private GameObject signPanel;   // inactive by default
 
-    private PlayerBrain _cachedPlayer;
+    [Header("Options")]
+    [SerializeField] private bool pauseTime = false; // if you want Time.timeScale = 0 while reading
 
-    public override bool CanInteract() => true;
+    private PlayerBrain _player;
 
-    public override string GetPrompt() => "Press E to read sign";
+    public override bool CanInteract() => enabled && gameObject.activeInHierarchy;
+
+    public override string GetPrompt() => "กด E เพื่ออ่านป้าย";
 
     public override void Interact(PlayerBrain player)
     {
-        _cachedPlayer = player;
+        if (!signPanel) { Debug.LogWarning($"[Sign] Panel not set on {name}"); return; }
 
-        // Freeze controls so player can’t move
-        player.SetInputBlocked(true);
+        _player = player;
+        _player.SetInputBlocked(true);
+        if (pauseTime) Time.timeScale = 0f;
 
-        // Show UI
-        if (signPanel)
-        {
-            signPanel.SetActive(true);
-            if (titleText) titleText.text = title;
-            if (bodyText)  bodyText.text  = message;
-        }
+        signPanel.SetActive(true);
+
+        // optional: fire UnityEvent/C# event hooks from BaseInteractable
         RaiseEvents(player);
     }
 
-    // Called by Close button on your sign panel UI
     public void CloseSign()
     {
         if (signPanel) signPanel.SetActive(false);
+        if (_player)   _player.SetInputBlocked(false);
+        if (pauseTime) Time.timeScale = 1f;
+        _player = null;
+    }
 
-        if (_cachedPlayer)
-            _cachedPlayer.SetInputBlocked(false);
+    public void SetContent(string newTitle, string newMessage)
+    {
+        title = newTitle;
+        message = newMessage;
+        // If panel is open, refresh UI
+
     }
 }

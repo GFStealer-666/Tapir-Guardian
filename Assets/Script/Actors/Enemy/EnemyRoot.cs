@@ -8,8 +8,11 @@ public class EnemyRoot : MonoBehaviour
     public LinearMover Mover;
 
     [Header("Target")]
-    public Transform Target;
+    public Transform target;
 
+    void OnDestroy() => PlayerLocator.OnPlayerSet -= HandlePlayerSet;
+
+    void HandlePlayerSet(GameObject p) => target = p ? p.transform : null;
     void OnEnable()
     {
         health.OnDied += Died;
@@ -27,10 +30,12 @@ public class EnemyRoot : MonoBehaviour
         if (Mover == null) Debug.LogError("PlayerRoot2D: Imover2D missing", this);
         if (health == null) Debug.LogError("PlayerRoot2D: IHealth missing", this);
 
-        if (Target == null)
+        if (target == null)
         {
-            var target = GameObject.FindGameObjectWithTag("Player");
-            if (target) Target = target.transform;
+            if (!PlayerLocator.TryGet(out var p))
+            PlayerLocator.OnPlayerSet += HandlePlayerSet;
+            else
+                target = p.transform;
         }
     }
     

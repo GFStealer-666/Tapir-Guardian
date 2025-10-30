@@ -13,7 +13,7 @@ public class WeaponDriver : MonoBehaviour
     [SerializeField] private PlayerAnimator2D anim2D;  
     [SerializeField] private PlayerAudioSoundEffect sfx;
     [SerializeField] private Transform meleeOrigin;   
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePointRight,firePointLeft;
 
     public event Action OnMeleeStarted;
     public event Action OnMeleeImpact;
@@ -47,8 +47,6 @@ public class WeaponDriver : MonoBehaviour
                 return true;
 
             case WeaponKind.Gun:
-                // optional: if you track ammo, gate here (return false when no ammo)
-                // if (!HasAmmo((WeaponGunSO)w)) return false;
                 StartCoroutine(RangedRoutine((WeaponGunSO)w));
                 return true;
         }
@@ -133,12 +131,13 @@ public class WeaponDriver : MonoBehaviour
 
     void DoShoot(WeaponGunSO w)
     {
-        if (!w.bulletPrefab || !firePoint) return;
+        Debug.Log("WeaponDriver DoShoot");
+        if (!w.bulletPrefab) return;
 
         int sign = anim2D ? anim2D.FacingSign : 1;
         Vector2 dir = (sign >= 0) ? Vector2.right : Vector2.left;
-
-        var go = Instantiate(w.bulletPrefab, firePoint.position, Quaternion.identity);
+        var muzzle = (sign >= 0) ? firePointRight : firePointLeft;
+        var go = Instantiate(w.bulletPrefab, muzzle.position, Quaternion.identity);
         var b = go.GetComponent<Bullet>();
         if (b)
         {

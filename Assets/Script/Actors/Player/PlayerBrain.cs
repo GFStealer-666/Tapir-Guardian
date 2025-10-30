@@ -11,6 +11,7 @@ public class PlayerBrain : MonoBehaviour
     [SerializeField] private IMover2D mover;
     [SerializeField] private IBlock blocker;
     [SerializeField] private WeaponDriver weaponDriver;
+    [SerializeField] private HealthComponent healthComponent;
 
     [Header("Inventory/Eq/Hotbar")]
     [SerializeField] private EquipmentComponent equipment;
@@ -40,7 +41,6 @@ public class PlayerBrain : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
 
         if (!sfx)        sfx        = GetComponentInChildren<PlayerAudioSoundEffect>();
         if (!weaponDriver) weaponDriver = GetComponentInChildren<WeaponDriver>();
@@ -49,6 +49,7 @@ public class PlayerBrain : MonoBehaviour
         if (!scanner)    scanner    = GetComponentInChildren<InteractionScanner>();
         if (!controlLock) controlLock = GetComponentInChildren<PlayerControlLock>();
         if (!animator2D) animator2D = GetComponentInChildren<PlayerAnimator2D>();
+        if (!healthComponent) healthComponent = GetComponentInChildren<HealthComponent>();
 
         input = inputReaderBehaviour as IInputReader;
 

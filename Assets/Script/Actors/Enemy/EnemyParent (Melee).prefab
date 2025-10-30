@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2846380857095810940}
   - component: {fileID: 2417652742990934553}
   - component: {fileID: 7827152013121254057}
+  - component: {fileID: 7603205544750513971}
   m_Layer: 3
   m_Name: EnemyStat
   m_TagString: Untagged
@@ -123,6 +124,27 @@ MonoBehaviour:
   root: {fileID: 4625039776897787684}
   config: {fileID: 11400000, guid: ca0a0f6aec4f35645a3da6b6ed869c76, type: 2}
   fillHealthOnApply: 1
+--- !u!114 &7603205544750513971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2561559289562217485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c7338149f56f149bbdb4250f988df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPrefab: {fileID: 5851061578017104260, guid: bca3062d57d85bc428a7c4d3165fd90b, type: 3}
+  itemData: {fileID: 11400000, guid: 126b28500faf3c6489615b831f86bffb, type: 2}
+  itemPickup: {fileID: 0}
+  minAmount: 1
+  maxAmount: 1
+  itemCount: 5
+  dropChance: 1
+  scatterForce: 2
+  upwardForce: 1
 --- !u!1 &4364992664711181548
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +290,7 @@ Rigidbody2D:
   m_Mass: 6.050829
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1.98
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -362,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab511fd00a0eacb478f2d9e15b5d6680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 4759513352342137141}
   Mover: {fileID: 6510757689590320329}
   Target: {fileID: 0}
 --- !u!114 &3735501019844971761
@@ -416,7 +439,7 @@ MonoBehaviour:
   localOffset: {x: 0, y: 0}
   attack: 12
   range: 0.56
-  cooldown: 0.8
+  cooldown: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 128

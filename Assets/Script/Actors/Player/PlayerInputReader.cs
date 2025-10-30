@@ -8,7 +8,7 @@ public class PlayerInputReader : MonoBehaviour, IInputReader
     [SerializeField] private InputActionReference block;
     [SerializeField] private InputActionReference shoot;
 
-    [SerializeField] private InputActionReference interact; // <-- NEW (E)
+    [SerializeField] private InputActionReference interact; 
 
     private void OnEnable()
     {
@@ -36,7 +36,7 @@ public class PlayerInputReader : MonoBehaviour, IInputReader
         s.BlockPressed  = block    && block.action.WasPerformedThisFrame();
         s.ShootPressed  = shoot    && shoot.action.WasPerformedThisFrame();
         s.ShootHeld     = shoot    && shoot.action.IsPressed();
-        s.InteractPressed = interact && interact.action.WasPerformedThisFrame(); // <-- NEW
+        s.InteractPressed = interact && interact.action.WasPerformedThisFrame();
         return s;
     }
 }

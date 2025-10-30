@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
         // Make the sprite face travel direction
         if (spriteRenderer)
             spriteRenderer.flipX = velocity.x < 0f;
+            spriteRenderer.flipY = velocity.x < 0f;
 
         // Or, if you prefer rotation instead of flip:
 

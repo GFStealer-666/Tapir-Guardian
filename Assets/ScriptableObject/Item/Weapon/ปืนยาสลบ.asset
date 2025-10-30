@@ -21,9 +21,12 @@ MonoBehaviour:
   kind: 1
   weaponSound: {fileID: 0}
   damage: 100
-  fireCooldown: 1
+  shootCooldown: 0.35
+  windUp: 0.08
+  useAnimationEvent: 1
+  bulletPrefab: {fileID: 5851061578017104260, guid: 659eba11cb76b6a428235e7c7b5bd92f, type: 3}
   bulletSpeed: 24
-  ammoItemId: Ammo_2
-  ammoPerShot: 1
-  bulletPrefab: {fileID: 5535120845612903208, guid: 659eba11cb76b6a428235e7c7b5bd92f, type: 3}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   muzzleLocalOffset: {x: 0.5, y: 0.2}

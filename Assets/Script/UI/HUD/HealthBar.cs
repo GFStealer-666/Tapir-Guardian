@@ -16,7 +16,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private bool useUnscaledTime = false;
     [SerializeField] private AnimationCurve ease = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [Header("Script reference")]
-    [SerializeField] private HealthComponent healthComponent;
+    [SerializeField] private HealthComponent healthComponent; // player health component
     private Coroutine animCo;
     private float displayedValue;
     private int currentMax;

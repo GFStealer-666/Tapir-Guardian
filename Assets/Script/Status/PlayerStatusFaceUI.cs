@@ -7,41 +7,70 @@ public class PlayerStatusFaceUI : MonoBehaviour
 {
     [Header("Binding")]
     [SerializeField] private StatusComponent target;
+    [SerializeField] private HealthComponent health;
     [SerializeField] private Image faceImage;
 
     [Header("Sprites")]
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite poisonSprite;
     [SerializeField] private Sprite slowSprite;
+    [SerializeField] private Sprite injuredSprite;
 
-    [Tooltip("Return to normalSprite when there is no relevant status active.")]
+    [Header("Rules")]
+    [Tooltip("If current HP is below this value, show injuredSprite regardless of status.")]
+    [SerializeField] private int injuredHpThreshold = 50;
     [SerializeField] private bool revertToNormalWhenClear = true;
 
-    // Track when each status was last applied so "latest wins"
     private readonly Dictionary<StatusSO, float> _lastAppliedTime = new();
+
+    // keep delegate refs so unsubscribe is clean
+    private System.Action<StatusInstance> _onApplied;
+    private System.Action<StatusInstance> _onRemoved;
+    private System.Action _onAnyChanged;
+    private System.Action<int,int> _onHealthChanged;
 
     void OnEnable()
     {
-        if (!target) return;
-        target.OnApplied    += HandleApplied;
-        target.OnRemoved    += _ => Refresh();
-        target.OnAnyChanged += Refresh;
+        // Wire Status events
+        if (target)
+        {
+            _onApplied     = HandleApplied;
+            _onRemoved     = _ => Refresh();
+            _onAnyChanged  = Refresh;
+
+            target.OnApplied    += _onApplied;
+            target.OnRemoved    += _onRemoved;
+            target.OnAnyChanged += _onAnyChanged;
+        }
+
+        // Wire Health events
+        if (health)
+        {
+            _onHealthChanged = (_, __) => Refresh();
+            health.OnHealthChanged += _onHealthChanged;
+        }
+
         Refresh();
     }
 
     void OnDisable()
     {
-        if (!target) return;
-        target.OnApplied    -= HandleApplied;
-        target.OnRemoved    -= _ => Refresh();     // Note: different lambda instance; safe since we're disabling
-        target.OnAnyChanged -= Refresh;
+        if (target)
+        {
+            if (_onApplied != null)     target.OnApplied    -= _onApplied;
+            if (_onRemoved != null)     target.OnRemoved    -= _onRemoved;
+            if (_onAnyChanged != null)  target.OnAnyChanged -= _onAnyChanged;
+        }
+        if (health && _onHealthChanged != null)
+            health.OnHealthChanged -= _onHealthChanged;
+
         _lastAppliedTime.Clear();
+        _onApplied = null; _onRemoved = null; _onAnyChanged = null; _onHealthChanged = null;
     }
 
     private void HandleApplied(StatusInstance inst)
     {
-        if (inst?.def)
-            _lastAppliedTime[inst.def] = Time.unscaledTime;  // record recency
+        if (inst?.def) _lastAppliedTime[inst.def] = Time.unscaledTime;
         Refresh();
     }
 
@@ -49,7 +78,14 @@ public class PlayerStatusFaceUI : MonoBehaviour
     {
         if (!faceImage) return;
 
-        // Choose the *latest* relevant status (Poison or Slow)
+        // --- Priority 1: Injured override ---
+        if (health && injuredSprite && health.CurrentHealth < injuredHpThreshold)
+        {
+            faceImage.sprite = injuredSprite;
+            return;
+        }
+
+        // --- Priority 2: Latest status (Poison/Slow) ---
         StatusSO winner = null;
         float bestTime = float.NegativeInfinity;
 
@@ -61,44 +97,26 @@ public class PlayerStatusFaceUI : MonoBehaviour
                 var inst = active[i];
                 if (inst?.def == null) continue;
 
-                // consider only Poison/Slow
                 if (inst.def.kind != StatusKind.Poison && inst.def.kind != StatusKind.Slow)
                     continue;
 
-                float t;
-                if (!_lastAppliedTime.TryGetValue(inst.def, out t))
-                {
-                    // If we never saw OnApplied (edge cases), consider it as very old
-                    t = -1f;
-                }
-
-                if (t > bestTime)
-                {
-                    bestTime = t;
-                    winner = inst.def;
-                }
+                float t = _lastAppliedTime.TryGetValue(inst.def, out var when) ? when : -1f;
+                if (t > bestTime) { bestTime = t; winner = inst.def; }
             }
         }
 
         if (!winner)
         {
-            if (revertToNormalWhenClear && normalSprite)
-                faceImage.sprite = normalSprite;
+            if (revertToNormalWhenClear && normalSprite) faceImage.sprite = normalSprite;
             return;
         }
 
         switch (winner.kind)
         {
-            case StatusKind.Poison:
-                if (poisonSprite) faceImage.sprite = poisonSprite;
-                break;
-            case StatusKind.Slow:
-                if (slowSprite) faceImage.sprite = slowSprite;
-                break;
+            case StatusKind.Poison: if (poisonSprite) faceImage.sprite = poisonSprite; break;
+            case StatusKind.Slow:   if (slowSprite)   faceImage.sprite = slowSprite;   break;
             default:
-                // Unknown kinds fall back to normal
-                if (revertToNormalWhenClear && normalSprite)
-                    faceImage.sprite = normalSprite;
+                if (revertToNormalWhenClear && normalSprite) faceImage.sprite = normalSprite;
                 break;
         }
     }
