@@ -7,15 +7,14 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("Composition")]
-    [SerializeField] private EnemyRoot root; // holds IMover2D + IHealth + Target
-    [SerializeField] private IEnemyAttack attack;           // inject at Awake (melee or ranged)
-    [SerializeField] private IAttackRangeProvider rangeProv; // inject at Awake
+    [SerializeField] private EnemyRoot root; 
+    [SerializeField] private IEnemyAttack attack;
+    [SerializeField] private IAttackRangeProvider rangeProv;
 
     [Header("Perception")]
     [SerializeField] private float sightRadius = 8f;
     [SerializeField] private float fov = 110f;
     [SerializeField] private LayerMask obstacleMask;
-
 
     [Header("Patrol (optional)")]
     public Transform[] waypoints;
@@ -26,8 +25,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float stopDistance = 0.8f;
     [SerializeField] private float loseTargetAfter = 2.0f;
 
+    [SerializeField] internal EnemyFacing2D facing;
+
     public float SightRadius => sightRadius;
     public float Fov => fov;
+
     private StateMachine sm;
     private int patrolIndex;
     private float loseTimer;
@@ -36,8 +38,8 @@ public class EnemyController : MonoBehaviour
     {
         sm = GetComponent<StateMachine>();
         root = root ? root : GetComponent<EnemyRoot>();
+        facing = facing ? facing : GetComponent<EnemyFacing2D>(); // ★
 
-        // Inject concrete behavior present on this GO (or children/parent)
         attack = attack ?? GetComponent<IEnemyAttack>() ?? GetComponentInChildren<IEnemyAttack>() ?? GetComponentInParent<IEnemyAttack>();
         rangeProv = rangeProv ?? GetComponent<IAttackRangeProvider>() ?? GetComponentInChildren<IAttackRangeProvider>() ?? GetComponentInParent<IAttackRangeProvider>();
 
@@ -55,15 +57,21 @@ public class EnemyController : MonoBehaviour
         public virtual void OnEnter() { }
         public virtual void Tick(float dt) { }
         public virtual void OnExit() { }
+
         protected bool SeeTarget()
         {
             if (!c.root || !c.root.target) return false;
+
             float dist = Vector2.Distance(c.transform.position, c.root.target.position);
             if (dist > c.sightRadius) return false;
 
-            var to = (c.root.target.position - c.transform.position);
-            if (Vector2.Angle(c.transform.right, to) > c.fov * 0.5f) return false;
+            Vector2 to = (c.root.target.position - c.transform.position);
 
+            // ★ Use logical forward from EnemyFacing2D (flips left/right), NOT transform.right
+            Vector2 forward = (c.facing ? c.facing.Forward : Vector2.right);
+            if (Vector2.Angle(forward, to) > c.fov * 0.5f) return false;
+
+            // LOS check
             return !Physics2D.Raycast(c.transform.position, to.normalized, to.magnitude, c.obstacleMask);
         }
     }
@@ -123,6 +131,9 @@ public class EnemyController : MonoBehaviour
             {
                 c.loseTimer = c.loseTargetAfter;
 
+                // ★ Keep looking at the target via facing (no transform rotation)
+                c.facing?.FaceByTargetX(c.root.target.position.x);
+
                 // use attack origin if provided
                 Vector2 origin = (c.attack is IAttackOriginProvider op)
                     ? op.GetOrigin(c.transform)
@@ -147,7 +158,6 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                // lost LOS, chase a bit toward last known position until timer expires
                 c.loseTimer -= dt;
                 if (c.loseTimer <= 0f) { c.sm.ChangeState(new Patrol(c)); return; }
 
@@ -168,22 +178,20 @@ public class EnemyController : MonoBehaviour
         public Attack(EnemyController c) : base(c) { }
         public override void Tick(float dt)
         {
-            Debug.Log($"{c.gameObject.name} in Attack State Tick");
             if (!c.root.target) { c.sm.ChangeState(new Patrol(c)); return; }
 
-            // face target (optional)
-            Vector2 to = c.root.target.position - c.transform.position;
-            if (to.sqrMagnitude > 0.001f) c.transform.right = to.normalized;
+            c.facing?.FaceByTargetX(c.root.target.position.x);
 
             // measure from origin (hand) if available
-            Vector2 origin = (c.attack is IAttackOriginProvider op) ? op.GetOrigin(c.transform)
-                                                      : (Vector2)c.transform.position;
+            Vector2 origin = (c.attack is IAttackOriginProvider op)
+                ? op.GetOrigin(c.transform)
+                : (Vector2)c.transform.position;
 
             Vector2 tp = TargetPoint(c.root.target, origin);
             float dist = Vector2.Distance(origin, tp);
             float atkRange = c.rangeProv.AttackRange;
 
-            if (dist > atkRange * 1.02f) // small hysteresis
+            if (dist > atkRange * 1.02f)
             {
                 c.sm.ChangeState(new Chase(c));
                 return;
@@ -193,6 +201,7 @@ public class EnemyController : MonoBehaviour
             if (!fired) c.root.Mover.Move(Vector2.zero);
         }
     }
+
     static Vector2 TargetPoint(Transform target, Vector2 from)
     {
         if (target && target.TryGetComponent<Collider2D>(out var col))

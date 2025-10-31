@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 1467ec9de275b774aa0cdf5ce7d9dd1d
+guid: f58aff9fde8714a43aee626906b635d3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6028711909619778846
-    second: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_0"
-  - first:
-      213: -2223263560513796401
-    second: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_1"
+      213: -8993324682118883147
+    second: damage_Enemy2 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 675
+  spritePixelsToUnits: 750
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_0"
+      name: damage_Enemy2 1_0
       rect:
         serializedVersion: 2
-        x: 1116
-        y: 134
-        width: 717
-        height: 2961
+        x: 0
+        y: 22
+        width: 887
+        height: 2697
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,30 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e15cd025a894aa350800000000000000
-      internalID: 6028711909619778846
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_1"
-      rect:
-        serializedVersion: 2
-        x: 1531
-        y: 131
-        width: 16
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fc6418132916521e0800000000000000
-      internalID: -2223263560513796401
+      spriteID: 5b81d8ca9da413380800000000000000
+      internalID: -8993324682118883147
       vertices: []
       indices: 
       edges: []
@@ -186,8 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\u0E28\u0E31\u0E15\u0E23\u0E39-3_0": 6028711909619778846
-      "\u0E28\u0E31\u0E15\u0E23\u0E39-3_1": -2223263560513796401
+      damage_Enemy2 1_0: -8993324682118883147
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

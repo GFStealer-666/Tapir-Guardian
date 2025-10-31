@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 1467ec9de275b774aa0cdf5ce7d9dd1d
+guid: 5b65f235afa51e34187c0a38aab8c9be
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6028711909619778846
-    second: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_0"
-  - first:
-      213: -2223263560513796401
-    second: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_1"
+      213: 5159223390724505981
+    second: Attack_Knife_Enemy20002 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 675
+  spritePixelsToUnits: 750
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_0"
+      name: Attack_Knife_Enemy20002 1_0
       rect:
         serializedVersion: 2
-        x: 1116
-        y: 134
-        width: 717
-        height: 2961
+        x: 956
+        y: 74
+        width: 833
+        height: 2899
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,30 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e15cd025a894aa350800000000000000
-      internalID: 6028711909619778846
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u0E28\u0E31\u0E15\u0E23\u0E39-3_1"
-      rect:
-        serializedVersion: 2
-        x: 1531
-        y: 131
-        width: 16
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fc6418132916521e0800000000000000
-      internalID: -2223263560513796401
+      spriteID: d714501d65e399740800000000000000
+      internalID: 5159223390724505981
       vertices: []
       indices: 
       edges: []
@@ -186,8 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\u0E28\u0E31\u0E15\u0E23\u0E39-3_0": 6028711909619778846
-      "\u0E28\u0E31\u0E15\u0E23\u0E39-3_1": -2223263560513796401
+      Attack_Knife_Enemy20002 1_0: 5159223390724505981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
