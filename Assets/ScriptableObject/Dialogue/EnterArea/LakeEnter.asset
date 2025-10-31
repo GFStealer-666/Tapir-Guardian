@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c6bdad054db6764fa3944189ed22568, type: 3}
-  m_Name: PoisonTrapNotification
+  m_Script: {fileID: 11500000, guid: 58923fa016855c24387a68481a04d009, type: 3}
+  m_Name: LakeEnter
   m_EditorClassIdentifier: 
-  sequenceId: PoisonTrapEncounter
-  category: 0
-  loop: 0
-  lines:
-  - {fileID: 11400000, guid: 2aff00ca8bf880545a8a2427d3ffc25e, type: 2}
+  text: "\u0E01\u0E33\u0E25\u0E31\u0E07\u0E02\u0E49\u0E32\u0E21\u0E44\u0E1B\u0E40\u0E02\u0E15\u0E25\u0E33\u0E18\u0E32\u0E23"
+  duration: 3
