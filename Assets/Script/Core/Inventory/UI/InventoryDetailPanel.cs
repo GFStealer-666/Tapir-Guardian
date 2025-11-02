@@ -6,6 +6,7 @@ public class InventoryDetailPanel : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private InventoryComponent inventory;   // auto-found if null
+    [SerializeField] private GameObject mainTarget;
     [SerializeField] private ItemDatabaseSO database;        // optional
 
     [Header("UI")]
@@ -52,13 +53,13 @@ public class InventoryDetailPanel : MonoBehaviour
 
         if (currentSO is IConsumableItem c)
         {
-            // pass the player/root as "user"; adjust if needed
-            var user = inventory.gameObject;
-            bool used = c.Use(user);
+            Debug.Log("CurrentSO are IConsumableItem");
+            bool used = c.Use(mainTarget);
 
             if (used)
             {
                 inventory.Consume(currentItemId, 1);
+                Debug.Log($"{currentItemId} used");
                 ShowItem(currentItemId); // refresh count/btn
             }
         }
