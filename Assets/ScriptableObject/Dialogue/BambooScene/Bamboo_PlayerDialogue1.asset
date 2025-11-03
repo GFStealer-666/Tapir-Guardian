@@ -17,3 +17,5 @@ MonoBehaviour:
   loop: 0
   lines:
   - {fileID: 11400000, guid: e6bbf53ac92298941901a3d4cc787a2b, type: 2}
+  - {fileID: 11400000, guid: a27833063d66d264b8fd2cd7fa4e7cae, type: 2}
+  - {fileID: 11400000, guid: 9a862bfc7f074f842b6fd1bfe02e2fc3, type: 2}

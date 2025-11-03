@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Animal_UnlockTS_Scene1
   m_EditorClassIdentifier: 
   sequenceId: Scene1_AnimalUnlcoker
-  category: 1
+  category: 0
   loop: 0
   lines:
   - {fileID: 11400000, guid: 661c7294b005d7b4cbee01c2940b01bd, type: 2}
+  - {fileID: 11400000, guid: 72bb7baa59d8ddc48b947e6c6305e5bb, type: 2}

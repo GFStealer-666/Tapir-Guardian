@@ -13,6 +13,7 @@ public class WeaponGunSO : WeaponSO
     public GameObject bulletPrefab;
     public float bulletSpeed = 12f;
     public LayerMask hitMask = ~0;
+    public AmmoSO ammoType;
 
     [Header("Muzzle offset")]
     public Vector2 muzzleLocalOffset = new Vector2(0.5f, 0.2f);

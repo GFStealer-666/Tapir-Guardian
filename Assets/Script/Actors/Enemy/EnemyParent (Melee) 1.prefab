@@ -173,7 +173,7 @@ Transform:
   m_GameObject: {fileID: 4241487645908290546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.46, y: -0.27, z: 0}
+  m_LocalPosition: {x: 0.06, y: -0.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -225,10 +225,10 @@ SpriteRenderer:
   m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: 8343ec45855090548a2cea601b7d9197, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.7894976, y: 4.7818184}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -279,8 +279,8 @@ MonoBehaviour:
   attackTrig: Attack
   damagedTrig: Damaged
   dieTrig: Die
-  movingThreshold: 0.02
-  flipByVelocityX: 1
+  movingThreshold: 0.0015
+  flipByVelocityX: 0
 --- !u!114 &4762743738722443159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,10 +349,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 6.050829
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1.68
+  m_Mass: 5.6196465
+  m_LinearDamping: 0.5
+  m_AngularDamping: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -360,10 +360,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!114 &5025174649627558585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +383,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckOffset: {x: 0.15, y: -1.29}
+  groundCheckOffset: {x: -0.2, y: -1.29}
   groundCheckRadius: 0.7
   isGrounded: 0
   debugEffectiveSpeed: 0
@@ -422,7 +422,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.15277934, y: -0.11570549}
+  m_Offset: {x: -0.21673226, y: -0.13132119}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -432,7 +432,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.619865, y: 3.7353911}
+  m_Size: {x: 1.4919591, y: 3.7666225}
   m_EdgeRadius: 0
 --- !u!114 &835671683237618103
 MonoBehaviour:
@@ -462,8 +462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 835671683237618103}
-  sightRadius: 13.13
-  fov: 25
+  sightRadius: 14.96
+  fov: 391.8
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
@@ -472,6 +472,7 @@ MonoBehaviour:
   waitAtPoint: 0.5
   stopDistance: 0.2
   loseTargetAfter: 2
+  facing: {fileID: 0}
 --- !u!114 &8071265198642120129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,11 +501,15 @@ MonoBehaviour:
   attackOrigin: {fileID: 988670531317110240}
   localOffset: {x: 0, y: 0}
   attack: 12
-  range: 0.56
+  range: 0.26
   cooldown: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 128
+  hitTiming: 0
+  animator: {fileID: 8745287912859997483}
+  attackTrigger: Attack
+  autoTriggerAnimator: 1
 --- !u!114 &1093340730569275635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,7 +552,7 @@ Transform:
   m_GameObject: {fileID: 5668954392196225863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.56, y: -0.27, z: 0}
+  m_LocalPosition: {x: -0.84, y: -0.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

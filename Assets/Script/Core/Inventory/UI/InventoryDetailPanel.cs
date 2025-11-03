@@ -5,16 +5,15 @@ using TMPro;
 public class InventoryDetailPanel : MonoBehaviour
 {
     [Header("Data")]
-    [SerializeField] private InventoryComponent inventory;   // auto-found if null
+    [SerializeField] private InventoryComponent inventory; 
     [SerializeField] private GameObject mainTarget;
-    [SerializeField] private ItemDatabaseSO database;        // optional
+    [SerializeField] private ItemDatabaseSO database;        
 
     [Header("UI")]
     [SerializeField] private Image itemIcon;
-    [SerializeField] private TMP_Text itemNameText;          // "ไอเท็ม"
-    [SerializeField] private TMP_Text countText;             // "1 ชิ้น"
-    [SerializeField] private Button useButton;               // "ใช้ไอเท็ม"
-
+    [SerializeField] private TMP_Text itemNameText;          
+    [SerializeField] private TMP_Text countText;            
+    [SerializeField] private Button useButton;               
     private string currentItemId;
     private ItemSO currentSO;
 

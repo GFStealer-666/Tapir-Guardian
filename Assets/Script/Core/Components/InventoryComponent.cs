@@ -9,7 +9,7 @@ public class InventoryComponent : MonoBehaviour
     [SerializeField] private List<ItemStack> stacks = new();
     public IReadOnlyList<ItemStack> Stacks => stacks;
     public event Action OnItemChanged;
-
+    
     public bool Add(string itemId, int amount = 1)
     {
         if (database == null || string.IsNullOrEmpty(itemId) || amount <= 0) return false;
@@ -57,10 +57,9 @@ public class InventoryComponent : MonoBehaviour
         if (database == null || string.IsNullOrEmpty(itemId) || amount <= 0) return false;
         var so = database.Get(itemId);
         if (!so) return false;
-
+        Debug.Log($"Consuming {itemId}");
         if (so.stackable)
         {
-            // consume from first matching stack(s)
             int need = amount;
             for (int i = 0; i < stacks.Count && need > 0; i++)
             {
@@ -84,7 +83,6 @@ public class InventoryComponent : MonoBehaviour
             foreach (var s in stacks) if (s.ItemId == itemId) have++;
             if (have < amount) return false;
 
-            // remove 'amount' entries
             for (int i = stacks.Count - 1; i >= 0 && amount > 0; i--)
                 if (stacks[i].ItemId == itemId) { stacks.RemoveAt(i); amount--; }
 
@@ -103,4 +101,10 @@ public class InventoryComponent : MonoBehaviour
     public bool Has(string itemId, int atLeast = 1) => GetCount(itemId) >= atLeast;
 
     public ItemSO Resolve(string itemId) => database ? database.Get(itemId) : null;
+}
+
+
+public interface IItemUseTargetProvider
+{
+    GameObject GetUseTarget();
 }

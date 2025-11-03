@@ -19,7 +19,7 @@ MonoBehaviour:
   stackable: 1
   maxStack: 1
   kind: 1
-  weaponSound: {fileID: 0}
+  weaponSound: {fileID: 8300000, guid: 580182421a23e204481461f07fbe96a1, type: 3}
   damage: 100
   shootCooldown: 0.35
   windUp: 0.08
@@ -29,4 +29,5 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  ammoType: {fileID: 11400000, guid: e8143d71f7b69ac449821f763b37d2ac, type: 2}
   muzzleLocalOffset: {x: 0.5, y: 0.2}

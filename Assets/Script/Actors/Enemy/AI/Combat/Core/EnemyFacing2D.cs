@@ -21,7 +21,6 @@ public class EnemyFacing2D : MonoBehaviour, IFacing2D
             if (x >  deadzone) sign = +1;
             if (x < -deadzone) sign = -1;
         }
-        if (sprite) sprite.flipX = (sign < 0);
     }
 
     public void FaceByTargetX(float tx){

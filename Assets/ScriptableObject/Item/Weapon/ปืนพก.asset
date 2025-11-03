@@ -29,4 +29,5 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 8
+  ammoType: {fileID: 11400000, guid: 126b28500faf3c6489615b831f86bffb, type: 2}
   muzzleLocalOffset: {x: 0.5, y: 0.2}

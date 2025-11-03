@@ -5472,7 +5472,7 @@ GameObject:
   - component: {fileID: 1901196115}
   - component: {fileID: 1901196114}
   m_Layer: 7
-  m_Name: PlayerDialogueCanvas (World Space)
+  m_Name: VIllagerDialogueCanvas (World Space)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10132,6 +10132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 6268778525351462537}
+  mainTarget: {fileID: 0}
   database: {fileID: 11400000, guid: 581fe1e8224de07479bed58a9017a2b1, type: 2}
   itemIcon: {fileID: 7189216926971554585}
   itemNameText: {fileID: 2755215943478927583}

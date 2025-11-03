@@ -19,10 +19,15 @@ MonoBehaviour:
   stackable: 1
   maxStack: 1
   kind: 1
+  weaponSound: {fileID: 0}
   damage: 60
-  fireCooldown: 0.4
+  shootCooldown: 0.35
+  windUp: 0.08
+  useAnimationEvent: 1
+  bulletPrefab: {fileID: 0}
   bulletSpeed: 24
-  ammoItemId: Ammo_1
-  ammoPerShot: 1
-  bulletPrefab: {fileID: 5535120845612903208, guid: 185ec5551bba69e41a608563408ec42a, type: 3}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ammoType: {fileID: 11400000, guid: 126b28500faf3c6489615b831f86bffb, type: 2}
   muzzleLocalOffset: {x: 0.5, y: 0.2}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum DamageType {Melee, Ranged}
+public enum DamageType {Melee, Ranged, NonLethal}
 
 public struct DamageData
 {

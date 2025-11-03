@@ -67,7 +67,7 @@ public class EnemyController : MonoBehaviour
 
             Vector2 to = (c.root.target.position - c.transform.position);
 
-            // ★ Use logical forward from EnemyFacing2D (flips left/right), NOT transform.right
+            Debug.Log("See the target");
             Vector2 forward = (c.facing ? c.facing.Forward : Vector2.right);
             if (Vector2.Angle(forward, to) > c.fov * 0.5f) return false;
 

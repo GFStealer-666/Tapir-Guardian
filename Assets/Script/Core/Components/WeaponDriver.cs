@@ -14,6 +14,10 @@ public class WeaponDriver : MonoBehaviour
     [SerializeField] private PlayerAudioSoundEffect sfx;
     [SerializeField] private Transform meleeOrigin;   
     [SerializeField] private Transform firePointRight,firePointLeft;
+    [Header("Inventory / Ammo")]
+    [SerializeField] private InventoryComponent inventory;
+    [SerializeField] private AudioClip dryFireSound;           
+    [SerializeField, Min(1)] private int bulletsPerShot = 1;  
 
     public event Action OnMeleeStarted;
     public event Action OnMeleeImpact;
@@ -33,7 +37,30 @@ public class WeaponDriver : MonoBehaviour
 
     private float GetReadyAt(WeaponSO w) => _readyAt.TryGetValue(w, out var t) ? t : 0f;
     private void  SetReadyAfter(WeaponSO w, float cd) => _readyAt[w] = Time.time + Mathf.Max(0f, cd);
+    private void Awake()
+    {
+        if (!inventory) inventory = GetComponentInParent<InventoryComponent>();
+    }
+     private bool HasAmmo(WeaponGunSO w, int need = 1)
+    {
+        if (!w || !w.ammoType) return true;
+        if (!inventory) return false;
 
+        // Assuming AmmoSO inherits ItemSO and uses the same `id` string as items
+        return inventory.Has(w.ammoType.Id, need);
+    }
+
+    private bool ConsumeAmmo(WeaponGunSO w, int amount = 1)
+    {
+        if (!w || !w.ammoType) return true; // infinite ammo case
+        if (!inventory) return false;
+        return inventory.Consume(w.ammoType.Id, amount);
+    }
+
+    private void PlayDry()
+    {
+        if (sfx && dryFireSound) sfx.PlaySoundEffect(dryFireSound);
+    }
     public bool TryUse(WeaponSO w)
     {
         if (!w) return false;
@@ -47,8 +74,18 @@ public class WeaponDriver : MonoBehaviour
                 return true;
 
             case WeaponKind.Gun:
-                StartCoroutine(RangedRoutine((WeaponGunSO)w));
+            {
+                var gun = (WeaponGunSO)w;
+
+                if (!HasAmmo(gun, bulletsPerShot))
+                {
+                    PlayDry();
+                    return false;
+                }
+
+                StartCoroutine(RangedRoutine(gun));
                 return true;
+            }
         }
         return false;
     }
@@ -93,7 +130,13 @@ public class WeaponDriver : MonoBehaviour
         } else {
             yield return new WaitForSeconds(w.windUp);
         }
-
+        if (!ConsumeAmmo(w, bulletsPerShot))
+        {
+            PlayDry();
+            SetReadyAfter(w, Mathf.Max(0.1f, w.shootCooldown * 0.25f));
+            _busy = false;
+            yield break;
+        }
         DoShoot(w);
         OnRangedFired?.Invoke();
 

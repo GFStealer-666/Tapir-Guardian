@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6bdad054db6764fa3944189ed22568, type: 3}
+  m_Name: FightingDialogueSequence
+  m_EditorClassIdentifier: 
+  sequenceId: FightingDialogue1
+  category: 0
+  loop: 0
+  lines:
+  - {fileID: 11400000, guid: abbeebd96a1d980459615a07e7cfe193, type: 2}
+  - {fileID: 11400000, guid: 0ec3c70eb7981584aa511472797d0122, type: 2}
