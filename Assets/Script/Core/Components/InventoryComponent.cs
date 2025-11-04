@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class InventoryComponent : MonoBehaviour
+public class InventoryComponent : MonoBehaviour,IItemUseTargetProvider
 {
+    [Header("Owner")]
+    [SerializeField] private GameObject owner; 
+
+    private void Awake()
+    {
+        if (!owner) owner = gameObject;
+    }
+
+    public GameObject GetUseTarget() => owner ? owner : gameObject;
     [SerializeField] private ItemDatabaseSO database;
     [SerializeField] private List<ItemStack> stacks = new();
     public IReadOnlyList<ItemStack> Stacks => stacks;

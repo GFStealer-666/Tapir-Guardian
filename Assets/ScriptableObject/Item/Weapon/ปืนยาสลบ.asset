@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4641695e6e877642846b27af1b63839, type: 3}
   m_Name: "\u0E1B\u0E37\u0E19\u0E22\u0E32\u0E2A\u0E25\u0E1A"
   m_EditorClassIdentifier: 
-  Id: Handgun_1
-  DisplayName: "\u0E1B\u0E37\u0E19\u0E1E\u0E01"
+  Id: Transquilizer_1
+  DisplayName: "\u0E1B\u0E37\u0E19\u0E22\u0E32\u0E2A\u0E25\u0E1A"
   Icon: {fileID: 21300000, guid: 9e1845a20c8427b4187bf4a343bce5c4, type: 3}
   Kind: 2
   stackable: 1
@@ -30,4 +30,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   ammoType: {fileID: 11400000, guid: e8143d71f7b69ac449821f763b37d2ac, type: 2}
+  damageType: 2
   muzzleLocalOffset: {x: 0.5, y: 0.2}

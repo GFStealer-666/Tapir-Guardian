@@ -11,20 +11,32 @@ public class HerbCodexSession : MonoBehaviour
 
     public event Action OnChanged;
 
+    [SerializeField] private List<HerbDataSO> unlocked = new List<HerbDataSO>();
+
     void Awake()
     {
+        
         ClearAllHerbUnlocks();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
+        UnlockOnStart();
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
         LoadFromPlayerPrefs();
         OnChanged?.Invoke();
+    }
+
+    public void UnlockOnStart()
+    {
+        if (unlocked.Count <= 0) return;
+        foreach(var x in unlocked)
+        {
+            Unlock(x.id);
+        }
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]

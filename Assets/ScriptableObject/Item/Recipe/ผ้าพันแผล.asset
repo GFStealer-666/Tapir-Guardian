@@ -19,6 +19,6 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: d99aabab7b84ee847ba3659369fbdcee, type: 2}
     count: 1
     itemId: CraftingMaterial_1
-  outputItem: {fileID: 11400000, guid: 2276e2d10680ac242913960ec25c4792, type: 2}
+  outputItem: {fileID: 11400000, guid: 89f120cc4f103604fa05c4059f4938b5, type: 2}
   outputCount: 1
   craftSeconds: 0

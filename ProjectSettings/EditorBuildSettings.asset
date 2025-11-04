@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LakeScene.unity
     guid: 73ecd715a96a16740b4bf231d4e4369c
   - enabled: 1
+    path: Assets/Scenes/BambooScene.unity
+    guid: bd32b617f6069d040858c22f267e1eb9
+  - enabled: 1
     path: Assets/Scenes/Gameover.unity
     guid: 1ff8ecb086a02a54099f8e95f36ff52a
   m_configObjects:

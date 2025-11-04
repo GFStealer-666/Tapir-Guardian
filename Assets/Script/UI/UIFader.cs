@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(CanvasGroup))]
 public class UIFader : MonoBehaviour
 {
-    CanvasGroup cg;
+    [SerializeField] CanvasGroup cg;
 
     void Awake()
     {

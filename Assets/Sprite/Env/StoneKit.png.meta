@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: f0f491f777320a6489dfec4b8d33ae40
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1589232661397687858
+    second: Stone_1-Photoroom_0
+  - first:
+      213: -6588947661872329088
+    second: Stone_1-Photoroom_1
+  - first:
+      213: 3352897231104793479
+    second: Stone_1-Photoroom_2
+  - first:
+      213: -8503535361825495617
+    second: Stone_1-Photoroom_3
+  - first:
+      213: -5169466873707423305
+    second: Stone_1-Photoroom_4
+  - first:
+      213: -5482230211595513406
+    second: Stone_1-Photoroom_5
+  - first:
+      213: -8362025040958792288
+    second: Stone_1-Photoroom_6
+  - first:
+      213: 7772826287270996280
+    second: Stone_1-Photoroom_7
+  - first:
+      213: -5608526145036773703
+    second: Stone_1-Photoroom_8
+  - first:
+      213: 1466984419937477250
+    second: Stone_1-Photoroom_9
+  - first:
+      213: 662843009933837704
+    second: Stone_1-Photoroom_10
+  - first:
+      213: -8238593895926790251
+    second: Stone_1-Photoroom_11
+  - first:
+      213: -3872383749299928389
+    second: Stone_1-Photoroom_12
+  - first:
+      213: 4126970315255578419
+    second: Stone_1-Photoroom_13
+  - first:
+      213: 5448847830106148944
+    second: Stone_1-Photoroom_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 300
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 211
+        width: 131
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23ece087fa61e0610800000000000000
+      internalID: 1589232661397687858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_1
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 209
+        width: 108
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e8572e20b5f84a0800000000000000
+      internalID: -6588947661872329088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_2
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 215
+        width: 103
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78b546c6442e78e20800000000000000
+      internalID: 3352897231104793479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_3
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 221
+        width: 97
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb52b6f54af5df980800000000000000
+      internalID: -8503535361825495617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_4
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 216
+        width: 82
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b91582744d5248b0800000000000000
+      internalID: -5169466873707423305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_5
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 202
+        width: 115
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c15fec2ba43be3b0800000000000000
+      internalID: -5482230211595513406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_6
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 41
+        width: 94
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0addab6778e14fb80800000000000000
+      internalID: -8362025040958792288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_7
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 42
+        width: 76
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8392b997350aedb60800000000000000
+      internalID: 7772826287270996280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_8
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 40
+        width: 100
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b69793bf238a22b0800000000000000
+      internalID: -5608526145036773703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_9
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 65
+        width: 55
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 282e769be86cb5410800000000000000
+      internalID: 1466984419937477250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_10
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 46
+        width: 45
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88505f4a434e23900800000000000000
+      internalID: 662843009933837704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_11
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 69
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59705986082aaad80800000000000000
+      internalID: -8238593895926790251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_12
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 75
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb28bfc2f77824ac0800000000000000
+      internalID: -3872383749299928389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_13
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 35
+        width: 114
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33ff367d2a1f54930800000000000000
+      internalID: 4126970315255578419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stone_1-Photoroom_14
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 50
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05092a47b323e9b40800000000000000
+      internalID: 5448847830106148944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Stone_1-Photoroom_0: 1589232661397687858
+      Stone_1-Photoroom_1: -6588947661872329088
+      Stone_1-Photoroom_10: 662843009933837704
+      Stone_1-Photoroom_11: -8238593895926790251
+      Stone_1-Photoroom_12: -3872383749299928389
+      Stone_1-Photoroom_13: 4126970315255578419
+      Stone_1-Photoroom_14: 5448847830106148944
+      Stone_1-Photoroom_2: 3352897231104793479
+      Stone_1-Photoroom_3: -8503535361825495617
+      Stone_1-Photoroom_4: -5169466873707423305
+      Stone_1-Photoroom_5: -5482230211595513406
+      Stone_1-Photoroom_6: -8362025040958792288
+      Stone_1-Photoroom_7: 7772826287270996280
+      Stone_1-Photoroom_8: -5608526145036773703
+      Stone_1-Photoroom_9: 1466984419937477250
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

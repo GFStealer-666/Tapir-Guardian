@@ -5,23 +5,42 @@ using TMPro;
 public class InventoryDetailPanel : MonoBehaviour
 {
     [Header("Data")]
-    [SerializeField] private InventoryComponent inventory; 
-    [SerializeField] private GameObject mainTarget;
-    [SerializeField] private ItemDatabaseSO database;        
+    [SerializeField] private InventoryComponent inventory;
+    [SerializeField] private ItemDatabaseSO database;
 
     [Header("UI")]
     [SerializeField] private Image itemIcon;
-    [SerializeField] private TMP_Text itemNameText;          
-    [SerializeField] private TMP_Text countText;            
-    [SerializeField] private Button useButton;               
+    [SerializeField] private TMP_Text itemNameText;
+    [SerializeField] private TMP_Text countText;
+    [SerializeField] private Button useButton;
+
     private string currentItemId;
     private ItemSO currentSO;
+    private IItemUseTargetProvider targetProvider;
 
     private void Awake()
     {
         if (!inventory) inventory = GetComponentInParent<InventoryComponent>();
+        targetProvider = inventory.GetComponent<IItemUseTargetProvider>();
+        Debug.Log(targetProvider);
+        if (useButton) useButton.onClick.RemoveAllListeners();
         if (useButton) useButton.onClick.AddListener(OnUseClicked);
+
+        if (inventory) inventory.OnItemChanged += OnInventoryChanged;
+
         RefreshEmpty();
+    }
+
+    private void OnDestroy()
+    {
+        if (inventory) inventory.OnItemChanged -= OnInventoryChanged;
+    }
+
+    private void OnInventoryChanged()
+    {
+        // keep current selection but refresh count / button
+        if (!string.IsNullOrEmpty(currentItemId)) ShowItem(currentItemId);
+        else RefreshEmpty();
     }
 
     public void ShowItem(string itemId)
@@ -37,29 +56,35 @@ public class InventoryDetailPanel : MonoBehaviour
 
         int count = inventory ? inventory.GetCount(itemId) : 0;
 
-        if (itemIcon)   { itemIcon.sprite = currentSO.Icon; itemIcon.enabled = currentSO.Icon; }
+        if (itemIcon)
+        {
+            itemIcon.sprite = currentSO.Icon;
+            itemIcon.enabled = currentSO.Icon != null; // safer than relying on Unity's bool cast
+        }
         if (itemNameText) itemNameText.text = currentSO.DisplayName;
-        if (countText)  countText.text = $"{Mathf.Max(0, count)} ชิ้น";
+        if (countText) countText.text = $"{Mathf.Max(0, count)} ชิ้น";
 
-        bool canUse = (currentSO is IConsumableItem) && count > 0;
-        if (useButton)  useButton.interactable = canUse;
+        bool hasTarget = targetProvider != null && targetProvider.GetUseTarget();
+        bool canUse = hasTarget && (currentSO is IConsumableItem) && count > 0;
+        Debug.Log(canUse);
+        if (useButton) useButton.interactable = canUse;
     }
 
     private void OnUseClicked()
     {
-        Debug.Log("Use item clicked");
         if (!inventory || !currentSO || string.IsNullOrEmpty(currentItemId)) return;
+        var target = (targetProvider != null) ? targetProvider.GetUseTarget() : null;
+        if (!target) { if (useButton) useButton.interactable = false; return; }
 
         if (currentSO is IConsumableItem c)
         {
-            Debug.Log("CurrentSO are IConsumableItem");
-            bool used = c.Use(mainTarget);
-
+            bool used = c.Use(target);
             if (used)
             {
-                inventory.Consume(currentItemId, 1);
-                Debug.Log($"{currentItemId} used");
-                ShowItem(currentItemId); // refresh count/btn
+                // Consume first, then refresh
+                bool ok = inventory.Consume(currentItemId, 1);
+                if (!ok) Debug.LogWarning($"Tried to consume {currentItemId} but inventory says no.");
+                ShowItem(currentItemId);
             }
         }
     }
@@ -67,10 +92,10 @@ public class InventoryDetailPanel : MonoBehaviour
     private void RefreshEmpty()
     {
         currentItemId = null; currentSO = null;
-        if (itemIcon)   { itemIcon.sprite = null; itemIcon.enabled = false; }
+        if (itemIcon) { itemIcon.sprite = null; itemIcon.enabled = false; }
         if (itemNameText) itemNameText.text = "ไอเท็ม";
-        if (countText)  countText.text = "0 ชิ้น";
-        if (useButton)  useButton.interactable = false;
+        if (countText) countText.text = "0 ชิ้น";
+        if (useButton) useButton.interactable = false;
     }
 
     private ItemSO Resolve(string id)

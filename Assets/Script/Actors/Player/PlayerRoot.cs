@@ -7,14 +7,6 @@ public class PlayerRoot : MonoBehaviour
 
     void Awake()
     {
-        if (Instance && Instance != this)
-        {
-            Destroy(gameObject);     // avoid duplicate players
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // keeps this GO + all children
         PlayerLocator.Report(gameObject);
     }
 

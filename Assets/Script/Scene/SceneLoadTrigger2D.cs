@@ -8,6 +8,7 @@ public class SceneLoadTrigger2D : MonoBehaviour
     public string sceneToLoad;
     public LoadSceneMode loadMode = LoadSceneMode.Single; // usually Single
     public string nextSceneSpawnId = "Spawn_Default";
+    [SerializeField] private PlayerControlLock playerlock;
 
     [Header("Filter")]
     public string playerTag = "Player";
@@ -34,7 +35,7 @@ public class SceneLoadTrigger2D : MonoBehaviour
     {
         if (!other.CompareTag(playerTag)) return;
         if (string.IsNullOrEmpty(sceneToLoad)) return;
-
+        playerlock.InputBlocked = true;
         // set spawn handoff for the next scene
         GameState.NextSpawnPointId = nextSceneSpawnId;
 
