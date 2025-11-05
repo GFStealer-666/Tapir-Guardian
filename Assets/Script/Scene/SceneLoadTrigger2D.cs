@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,7 +36,7 @@ public class SceneLoadTrigger2D : MonoBehaviour
     {
         if (!other.CompareTag(playerTag)) return;
         if (string.IsNullOrEmpty(sceneToLoad)) return;
-        playerlock.InputBlocked = true;
+        if(playerlock) playerlock.InputBlocked = true;
         // set spawn handoff for the next scene
         GameState.NextSpawnPointId = nextSceneSpawnId;
 
