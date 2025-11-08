@@ -14,7 +14,7 @@ public class AttackAnimationRelay : MonoBehaviour
     {
         // Destroy(gameObject); // or return to pool
         var sr = GetComponentInChildren<SpriteRenderer>();
-        if (sr) sr.enabled = false;
+        // if (sr) sr.enabled = false;
         // Keep colliders disabled (done on OnDied in the bridge)
         var ctrl = GetComponent<EnemyController>();
         if (ctrl) ctrl.enabled = false;

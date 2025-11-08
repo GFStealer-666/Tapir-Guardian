@@ -7,29 +7,33 @@ using UnityEngine;
 public class AnimalAnimation : MonoBehaviour
 {
     [Header("Animation")]
-    [Tooltip("Animator bool or trigger to enter the run animation.")]
-    public string runParam = "IsRunning";     // set to your Animator parameter
-    public bool runParamIsTrigger = false;    // true if it's a Trigger, false if it's a Bool
+    [Tooltip("Animator parameter to trigger run animation.")]
+    public string runParam = "IsRunning";     // Bool or Trigger
+    public bool runParamIsTrigger = false;
+
+    [Tooltip("Animator parameter for idle animation (optional). Leave empty if handled automatically.")]
+    public string idleParam = "IsIdle";       // optional Bool, leave blank if not used
 
     [Header("Movement")]
     [SerializeField, Min(0.1f)] private float runSpeed = 5f;
-    [SerializeField] private bool flipXWhenEscaping = true; // face left if your sprite uses flipX
+    [SerializeField] private bool flipXWhenRunningLeft = true;
     [SerializeField] private bool zeroGravityWhileRunning = true;
 
-    [Header("Exit")]
-    [Tooltip("How far past the left screen edge we consider 'off map' (world units).")]
-    [SerializeField] private float leftMargin = 2f;
-    [Tooltip("Destroy game object after exiting. Untick if you just want to disable it.")]
-    [SerializeField] private bool destroyAfterExit = true;
+    [Header("Destination")]
+    [Tooltip("The point the tapir should run to.")]
+    public Transform targetPoint;
 
-    [Header("Optional: turn off collisions while escaping")]
-    [SerializeField] private bool disableCollidersOnEscape = true;
+    [Tooltip("Distance threshold to stop running (in world units).")]
+    [SerializeField] private float stopDistance = 0.1f;
+
+    [Header("Collision")]
+    [SerializeField] private bool disableCollidersWhileRunning = true;
 
     Animator _anim;
     Rigidbody2D _rb;
     SpriteRenderer _sr;
     Collider2D[] _cols;
-    [SerializeField] private bool _escaping;
+    bool _escaping;
 
     void Awake()
     {
@@ -39,46 +43,58 @@ public class AnimalAnimation : MonoBehaviour
         _cols = GetComponentsInChildren<Collider2D>();
     }
 
-    /// Call this from your event (button, trigger, dialogue, etc.)
+    /// Call this when the event is triggered (for example, cage opened)
     public void TriggerEscape()
     {
-        if (_escaping) return;
-        _escaping = true;
-        StartCoroutine(EscapeRoutine());
+        if (!_escaping && targetPoint)
+            StartCoroutine(EscapeRoutine());
     }
 
     IEnumerator EscapeRoutine()
     {
-        // Prep visuals & physics
-        if (_sr && flipXWhenEscaping) _sr.flipX = true;      // face left
-        if (zeroGravityWhileRunning)  _rb.gravityScale = 0f; // keep flat
-        if (disableCollidersOnEscape) foreach (var c in _cols) c.enabled = false;
+        _escaping = true;
 
-        // Enter run animation
+        // Setup
+        if (zeroGravityWhileRunning) _rb.gravityScale = 0f;
+        if (disableCollidersWhileRunning) foreach (var c in _cols) c.enabled = false;
+
+        Vector3 targetPos = targetPoint.position;
+        bool runningLeft = targetPos.x < transform.position.x;
+
+        if (_sr && flipXWhenRunningLeft)
+            _sr.flipX = runningLeft;
+
+        // Start run animation
         if (_anim)
         {
             if (runParamIsTrigger) _anim.SetTrigger(runParam);
             else _anim.SetBool(runParam, true);
         }
 
-        // Compute world X to exit (slightly beyond left screen edge)
-        var cam = Camera.main;
-        float leftEdgeX = cam != null
-            ? cam.ViewportToWorldPoint(new Vector3(0f, 0.5f, 0f)).x - leftMargin
-            : transform.position.x - 30f; // fallback
-
-        // Run left until off-screen
-        while (transform.position.x > leftEdgeX)
+        // Move until near target
+        while (Vector2.Distance(transform.position, targetPos) > stopDistance)
         {
-            _rb.linearVelocity = new Vector2(-runSpeed, 0f);
+            float dir = runningLeft ? -1f : 1f;
+            _rb.linearVelocity = new Vector2(dir * runSpeed, 0f);
             yield return null;
         }
 
-        // Stop & clean up
+        // Stop
         _rb.linearVelocity = Vector2.zero;
-        if (_anim && !runParamIsTrigger) _anim.SetBool(runParam, false);
 
-        if (destroyAfterExit) Destroy(gameObject);
-        else gameObject.SetActive(false);
+        // Back to idle
+        if (_anim)
+        {
+            if (!runParamIsTrigger)
+                _anim.SetBool(runParam, false);
+            if (!string.IsNullOrEmpty(idleParam))
+                _anim.SetBool(idleParam, true);
+        }
+
+        // Restore colliders
+        if (disableCollidersWhileRunning)
+            foreach (var c in _cols) c.enabled = true;
+
+        _escaping = false;
     }
 }

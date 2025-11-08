@@ -207,7 +207,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: KnifeEnemySprite
+  m_Name: EnemyArmorKnife
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsWalking
@@ -308,7 +308,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -86633792686197334}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_Position: {x: 370, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2005905059241605523}
     m_Position: {x: 170, y: 120, z: 0}

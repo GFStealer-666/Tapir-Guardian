@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 190083132}
   - component: {fileID: 190083134}
   m_Layer: 0
-  m_Name: "\u0E2A\u0E21\u0E40\u0E2A\u0E23\u0E47\u0E08"
+  m_Name: Somsetch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1160,13 +1160,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runParam: IsRunning
   runParamIsTrigger: 1
+  idleParam: IsIdle
   runSpeed: 5
-  flipXWhenEscaping: 0
+  flipXWhenRunningLeft: 0
   zeroGravityWhileRunning: 1
-  leftMargin: 2
-  destroyAfterExit: 1
-  disableCollidersOnEscape: 1
-  _escaping: 0
+  targetPoint: {fileID: 834344588}
+  stopDistance: 0.93
+  disableCollidersWhileRunning: 1
 --- !u!50 &190083133
 Rigidbody2D:
   serializedVersion: 5
@@ -3661,6 +3661,37 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &834344587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 834344588}
+  m_Layer: 0
+  m_Name: Moving Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &834344588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834344587}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.39, y: -0.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 646410254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &834845576
 GameObject:
@@ -19462,6 +19493,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9013856809394786027, guid: 43e090bb48b47bf44915b466e5aea8e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 190083129}
+    - targetCorrespondingSourceObject: {fileID: 9013856809394786027, guid: 43e090bb48b47bf44915b466e5aea8e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 834344588}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43e090bb48b47bf44915b466e5aea8e8, type: 3}
 --- !u!224 &7839340678922096260
