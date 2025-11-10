@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     private int _damage;
     private GameObject _source;
-    private LayerMask _hitMask;
+    [SerializeField] private LayerMask _hitMask;
     private float _deathAt;
 
     public void Configure(int damage, Vector2 velocity, GameObject source, float customLife, LayerMask mask)

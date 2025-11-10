@@ -4,8 +4,6 @@ using UnityEngine;
 public class CraftingMaterialSO : ItemSO
 {
     [Header("Material Info")]
-    [TextArea(1, 4)]
-    public string description;
 
     [Tooltip("Optional: for grouping (e.g., Wood, Metal, Herb, MonsterPart).")]
     public string category;

@@ -4,6 +4,9 @@ using UnityEngine;
 public class EnemyRoot : MonoBehaviour
 {
     public HealthComponent health;
+    public EnemyController enemyController;
+    public StateMachine stateMachine;
+    public BoxCollider2D boxCollider;
     public IDamageable Idamageable;
     public LinearMover Mover;
 
@@ -38,10 +41,13 @@ public class EnemyRoot : MonoBehaviour
                 target = p.transform;
         }
     }
-    
+
     public void Died()
     {
-        this.gameObject.SetActive(false);
+        enemyController.enabled = false;
+        stateMachine.enabled = false;
+        boxCollider.isTrigger = true;
         Debug.Log($"{gameObject.name} EnemyRoot Died");
     }
+    
 }

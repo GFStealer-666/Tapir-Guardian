@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: CraftingMaterial_1
   DisplayName: Rag
+  Description: "\u0E1C\u0E49\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E41\u0E1C\u0E25"
   Icon: {fileID: 21300000, guid: 0d86c4ae8ca199a48b69501da05a1f86, type: 3}
   Kind: 5
   stackable: 1
   maxStack: 999
-  description: "\u0E1C\u0E49\u0E32"
   category: CraftingMaterial
   tags: CraftingMaterial

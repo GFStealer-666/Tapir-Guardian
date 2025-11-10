@@ -9,7 +9,7 @@ public class PlayerBrain : MonoBehaviour
 
     [Header("Gameplay refs")]
     [SerializeField] private IMover2D mover;
-    [SerializeField] private IBlock blocker;
+    [SerializeField] private BlockComponent blocker;
     [SerializeField] private WeaponDriver weaponDriver;
     [SerializeField] private HealthComponent healthComponent;
 
@@ -54,7 +54,7 @@ public class PlayerBrain : MonoBehaviour
         input = inputReaderBehaviour as IInputReader;
 
         mover   ??= GetComponent<IMover2D>() ?? GetComponentInParent<IMover2D>();
-        blocker ??= GetComponent<IBlock>()   ?? GetComponentInChildren<IBlock>() ?? GetComponentInParent<IBlock>();
+    
 
         _linearMover = mover as LinearMover;
         _rb = GetComponent<Rigidbody2D>();

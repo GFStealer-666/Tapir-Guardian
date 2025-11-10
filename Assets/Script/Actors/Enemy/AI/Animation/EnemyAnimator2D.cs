@@ -91,13 +91,6 @@ public class EnemyAnimator2D : MonoBehaviour
         }
     }
 
-    void HandleMoved(Vector2 dir) // only used if you added the event
-    {
-        animator.SetBool(hWalk, Mathf.Abs(dir.x) > 0.01f);
-        if (flipByVelocityX && spriteRenderer)
-            spriteRenderer.flipX = (dir.x < 0f);
-    }
-
     void HandleStateChanged(string s)
     {
         // Patrol/Chase considered "walking", others not. Polling still refines this each frame.

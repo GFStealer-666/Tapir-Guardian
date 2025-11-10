@@ -30,7 +30,7 @@ public class BlockComponent : MonoBehaviour, IBlock
     public float MoveSpeedModifier => IsBlocking ? blockMovespeedMultiplier : 1f;
     void Awake()
     {
-        speedStack = GetComponentInParent<SpeedModifierStack>() ?? GetComponent<SpeedModifierStack>();
+        if(!speedStack) speedStack = GetComponentInParent<SpeedModifierStack>() ?? GetComponent<SpeedModifierStack>();
     }
     void Update()
     {
@@ -38,10 +38,8 @@ public class BlockComponent : MonoBehaviour, IBlock
     }
     public bool TryBlock()
     {
-        Debug.Log("Try Blocking");
         if (IsBlocking || IsOnCooldown) return false;
         // If currently player is blocking or it in cooldown will return
-        Debug.Log("Actually Blocking");
         float now = Now;
         float pw = Mathf.Clamp(perfectWindowDuration, 0f, duration); // try to make sure it not blocking longer than the duration it should be
 

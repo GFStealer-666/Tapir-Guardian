@@ -25,6 +25,12 @@ public class MeleeAttackBehaviour : MonoBehaviour,
     [SerializeField] private string attackTrigger = "Attack";
     [SerializeField] private bool autoTriggerAnimator = true;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource sfxSource;     // optional, auto-detect if null
+    [SerializeField] private AudioClip[] swingSfx;      // whoosh / swing sounds
+    [SerializeField] private AudioClip[] hitSfx;        // impact sounds
+    [Range(0f, 1f)] [SerializeField] private float sfxVolume = 1f;
+
     private float nextAt;
     private bool isSwinging;
     private Transform latchedTarget;
@@ -34,7 +40,8 @@ public class MeleeAttackBehaviour : MonoBehaviour,
 
     void Awake()
     {
-        if (!animator) animator = GetComponentInChildren<Animator>();
+        if (!animator)  animator  = GetComponentInChildren<Animator>();
+        if (!sfxSource) sfxSource = GetComponent<AudioSource>();
     }
 
     public Vector2 GetOrigin(Transform self)
@@ -45,8 +52,8 @@ public class MeleeAttackBehaviour : MonoBehaviour,
 
     public bool TryAttack(Transform self, Transform target)
     {
-        if (!target) { return false; }
-        if (Time.time < nextAt) { return false; }
+        if (!target) return false;
+        if (Time.time < nextAt) return false;
 
         Vector2 origin   = GetOrigin(self);
         Vector2 hitPoint = target.TryGetComponent<Collider2D>(out var col)
@@ -54,33 +61,35 @@ public class MeleeAttackBehaviour : MonoBehaviour,
             : (Vector2)target.position;
 
         float dist = Vector2.Distance(origin, hitPoint);
-        if (dist > range) { return false; }
+        if (dist > range) return false;
 
         // layer gate
-        if (((1 << target.gameObject.layer) & targetMask.value) == 0) { return false; }
+        if (((1 << target.gameObject.layer) & targetMask.value) == 0) return false;
 
-        // Start swing / or do instant hit
         nextAt = Time.time + cooldown;
+
+        // play swing sound (before the hit)
+        PlaySwingSfx();
 
         if (hitTiming == HitTiming.Instant)
         {
             ApplyDamageTo(target, origin);
-            // still play an anim if available (looks better)
             if (autoTriggerAnimator && animator && !string.IsNullOrEmpty(attackTrigger))
                 animator.SetTrigger(attackTrigger);
             return true;
         }
 
-        // AnimationEvent mode
         isSwinging    = true;
         latchedTarget = target;
         OnAttackStarted?.Invoke();
+
         if (autoTriggerAnimator && animator && !string.IsNullOrEmpty(attackTrigger))
             animator.SetTrigger(attackTrigger);
+
         return true;
     }
 
-    // === Call these from animation events on the Attack clip ===
+    // === Animation Events ===
     public void AnimEvent_AttackHit()
     {
         if (!isSwinging || !latchedTarget) return;
@@ -112,8 +121,32 @@ public class MeleeAttackBehaviour : MonoBehaviour,
         {
             var data = new DamageData(attack, DamageType.Melee, gameObject, true);
             d.ReceiveDamage(in data);
-            // Debug.Log("Melee: damage applied");
+            PlayHitSfx(); // ✅ play on successful hit
         }
+    }
+
+    private void PlaySwingSfx()
+    {
+        if (swingSfx == null || swingSfx.Length == 0) return;
+        var clip = swingSfx[UnityEngine.Random.Range(0, swingSfx.Length)];
+        if (!clip) return;
+
+        if (sfxSource)
+            sfxSource.PlayOneShot(clip, sfxVolume);
+        else
+            AudioSource.PlayClipAtPoint(clip, transform.position, sfxVolume);
+    }
+
+    private void PlayHitSfx()
+    {
+        if (hitSfx == null || hitSfx.Length == 0) return;
+        var clip = hitSfx[UnityEngine.Random.Range(0, hitSfx.Length)];
+        if (!clip) return;
+
+        if (sfxSource)
+            sfxSource.PlayOneShot(clip, sfxVolume);
+        else
+            AudioSource.PlayClipAtPoint(clip, transform.position, sfxVolume);
     }
 
 #if UNITY_EDITOR
@@ -134,7 +167,6 @@ public class MeleeAttackBehaviour : MonoBehaviour,
     }
 #endif
 
-    // Optional external config
     public void ApplyConfig(int atk, float rng, float cd, LayerMask mask)
     { attack = atk; range = rng; cooldown = cd; targetMask = mask; }
 }

@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30707ed99a360e43bae0ac0eb459120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Iblock: {fileID: 0}
 --- !u!114 &3528362633058136807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   melee: {fileID: 0}
+  ranged: {fileID: 6010982016974816261}
 --- !u!1 &2232163327272165830
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8318788966127089689}
+  - component: {fileID: 5973943507933847131}
   m_Layer: 3
   m_Name: EnemyAttackOrigin
   m_TagString: Untagged
@@ -288,12 +291,109 @@ Transform:
   m_GameObject: {fileID: 2232163327272165830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.62, y: 0.61, z: 0}
+  m_LocalPosition: {x: -0.84, y: 1.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512355471658558786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &5973943507933847131
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2232163327272165830}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5057838963828121159
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +578,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 5819581528525010704}
+  enemyController: {fileID: 3081368073962290149}
+  stateMachine: {fileID: 4662832387107082452}
+  boxCollider: {fileID: 8325554811259186780}
   Mover: {fileID: 4870683620951346294}
   target: {fileID: 0}
 --- !u!114 &3081368073962290149
@@ -493,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 8762010902130549959}
-  sightRadius: 14.96
+  sightRadius: 6
   fov: 391.8
   obstacleMask:
     serializedVersion: 2
@@ -548,14 +651,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireOrigin: {fileID: 8318788966127089689}
   localOffset: {x: 0, y: 0}
-  bulletPrefab: {fileID: 0}
-  attack: 8
-  fireRange: 7.5
-  bulletSpeed: 12
-  fireCooldown: 0.6
+  bulletPrefab: {fileID: 5535120845612903208, guid: a145c39ddd8cec64cb511d215399171c, type: 3}
+  attack: 10
+  fireRange: 20
+  bulletSpeed: 45
+  fireCooldown: 2
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
-  animator: {fileID: 0}
+    m_Bits: 128
+  fireTiming: 0
+  animator: {fileID: 3518226387081709916}
   attackTrigger: Attack
   autoTriggerAnimator: 1
+  sfxSource: {fileID: 5973943507933847131}
+  fireSfx:
+  - {fileID: 8300000, guid: 4a29837d5063fce45a2585754bfc1b27, type: 3}
+  - {fileID: 8300000, guid: 8a1b979308cc24e4fa6cc75a1ad35d12, type: 3}
+  fireSfxVolume: 1

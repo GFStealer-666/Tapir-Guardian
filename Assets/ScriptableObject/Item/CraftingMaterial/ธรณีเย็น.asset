@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: CraftingMaterial_2
   DisplayName: "\u0E18\u0E23\u0E13\u0E35\u0E40\u0E22\u0E47\u0E19"
+  Description: "\u0E2A\u0E21\u0E38\u0E19\u0E44\u0E1E\u0E23\u0E17\u0E35\u0E48\u0E2B\u0E32\u0E04\u0E48\u0E2D\u0E19\u0E02\u0E49\u0E32\u0E07\u0E22\u0E32\u0E01"
   Icon: {fileID: 21300000, guid: 01e4cab3a5cdee141b9c2c75484b81a0, type: 3}
   Kind: 5
   stackable: 1
   maxStack: 999
-  description: 
-  category: Herb
-  tags: Herb
+  category: CraftingMaterial
+  tags: CraftingMaterial

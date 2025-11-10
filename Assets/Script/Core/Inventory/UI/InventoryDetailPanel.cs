@@ -11,7 +11,7 @@ public class InventoryDetailPanel : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Image itemIcon;
     [SerializeField] private TMP_Text itemNameText;
-    [SerializeField] private TMP_Text countText;
+    [SerializeField] private TMP_Text detailText;
     [SerializeField] private Button useButton;
 
     private string currentItemId;
@@ -62,7 +62,7 @@ public class InventoryDetailPanel : MonoBehaviour
             itemIcon.enabled = currentSO.Icon != null; // safer than relying on Unity's bool cast
         }
         if (itemNameText) itemNameText.text = currentSO.DisplayName;
-        if (countText) countText.text = $"{Mathf.Max(0, count)} ชิ้น";
+        if (detailText) detailText.text = currentSO.Description;
 
         bool hasTarget = targetProvider != null && targetProvider.GetUseTarget();
         bool canUse = hasTarget && (currentSO is IConsumableItem) && count > 0;
@@ -94,7 +94,7 @@ public class InventoryDetailPanel : MonoBehaviour
         currentItemId = null; currentSO = null;
         if (itemIcon) { itemIcon.sprite = null; itemIcon.enabled = false; }
         if (itemNameText) itemNameText.text = "ไอเท็ม";
-        if (countText) countText.text = "0 ชิ้น";
+        if (detailText) detailText.text = "คำอธิบายไอเท็ม";
         if (useButton) useButton.interactable = false;
     }
 

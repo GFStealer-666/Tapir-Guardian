@@ -8,13 +8,13 @@ public class DamageReceiver : MonoBehaviour , IDamageable
 {
     private IStat Istats;
     private IHealth Ihealth;
-    private IBlock Iblock;
-
-    void Awake()
+    [SerializeField] private BlockComponent Iblock;
+    public event Action<bool> OnBlocked;
+    void Awake() 
     {
         Istats = GetComponent<IStat>();
         Ihealth = GetComponent<IHealth>();
-        Iblock = GetComponent<IBlock>();
+        if(!Iblock) Iblock = GetComponent<BlockComponent>();
 
         if (Ihealth == null)
         {
@@ -31,18 +31,39 @@ public class DamageReceiver : MonoBehaviour , IDamageable
     // Basically it will hit 
     public void ReceiveDamage(in DamageData damage)
     {
-        Debug.Log($"DamageReceiver {this.gameObject} ReceiveDamage: {damage.RawDamage} type:{damage.Type}");
+        Debug.Log($"ReceiveDamage: {damage.RawDamage} type:{damage.Type}");
         int defense = Istats != null ? Istats.GetStatTypeOf(StatType.Defense) : 0;
         int dmgAfterArmor = DamageSystem.Resolve(damage.RawDamage, defense);
 
+        // --- Detect blocking ---
+        bool didBlock = damage.CanBeBlocked && Iblock != null && Iblock.IsBlocking;
+        bool didPerfectBlock = didBlock && Iblock.IsPerfectBlocking;
+
         float blockMultiplier = 1f;
-        if (damage.CanBeBlocked && Iblock != null)
+        if (didBlock)
         {
             blockMultiplier = Iblock.BlockMultiplier;
         }
 
         int finalDamage = Mathf.RoundToInt(dmgAfterArmor * blockMultiplier);
-
         Ihealth.TakeDamage(finalDamage);
+
+        // --- Notify visual/audio systems ---
+        if (didBlock)
+        {
+            OnBlocked?.Invoke(false);
+            if (didPerfectBlock)
+            {
+                OnBlocked?.Invoke(true);
+                Debug.Log("<color=yellow>Perfect Block!</color>");
+            }
+            else
+                Debug.Log("<color=cyan>Normal Block!</color>");
+        }
+        else
+        {
+            Debug.Log("<color=red>Direct Hit!</color>");
+        }
     }
+
 }

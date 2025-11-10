@@ -9,6 +9,7 @@ public class HealthComponent : MonoBehaviour, IHealth,IConfigurableHealth
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
     public event Action<int, int> OnHealthChanged;
+    public event Action OnTakenDamaged;
     public event Action OnDied;
     public bool IsDead => currentHealth <= 0;
     [Header("Debug Only")]
@@ -35,7 +36,7 @@ public class HealthComponent : MonoBehaviour, IHealth,IConfigurableHealth
             OnDied?.Invoke();
             Debug.Log($"{gameObject.name} has died.");
         }
-
+        OnTakenDamaged?.Invoke();
     }
     public void Heal(int amount)
     {

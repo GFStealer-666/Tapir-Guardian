@@ -19,12 +19,12 @@ MonoBehaviour:
   stackable: 1
   maxStack: 1
   kind: 0
-  weaponSound: {fileID: 8300000, guid: b6c5297fda8345b4eb0715609918eadb, type: 3}
+  weaponSound: {fileID: 8300000, guid: 08b46e91cd6c8a7499e3c45c5c72321d, type: 3}
   damage: 20
-  attackCooldown: 0.85
+  attackCooldown: 1
   swingRadius: 1.2
   swingLocalOffset: {x: 0.6, y: 0}
-  windUp: 0.12
+  windUp: 0.4
   useAnimationEvent: 1
   hitMask:
     serializedVersion: 2

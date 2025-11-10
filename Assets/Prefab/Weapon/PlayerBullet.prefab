@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 5851061578017104260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.985027, y: -2.6239204, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.68, y: 0.68, z: 0.68}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -201,3 +201,6 @@ MonoBehaviour:
   rb: {fileID: 4405263458330485869}
   maxLife: 2
   spriteRenderer: {fileID: 6178358431217949241}
+  _hitMask:
+    serializedVersion: 2
+    m_Bits: 0

@@ -131,7 +131,6 @@ public class EnemyController : MonoBehaviour
             {
                 c.loseTimer = c.loseTargetAfter;
 
-                // ★ Keep looking at the target via facing (no transform rotation)
                 c.facing?.FaceByTargetX(c.root.target.position.x);
 
                 // use attack origin if provided

@@ -5,6 +5,7 @@ public class PlayerAudioSoundEffect : MonoBehaviour
     public AudioSource audioSource;
     [Header("Script References")]
     [SerializeField] private WeaponDriver weaponDriver;
+    [SerializeField] private HealthComponent healthComponent;
     [Header("Sound Effects")]
     [SerializeField] private AudioClip walkSound;
     [SerializeField] private AudioClip damagedSound;
@@ -16,12 +17,12 @@ public class PlayerAudioSoundEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        healthComponent.OnTakenDamaged += PlayDamagedSound;
     }
 
     private void OnDisable()
     {
-        
+        healthComponent.OnTakenDamaged -= PlayDamagedSound;
     }
     private void Awake()
     {
