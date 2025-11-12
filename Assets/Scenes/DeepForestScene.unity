@@ -2166,10 +2166,38 @@ PrefabInstance:
       propertyPath: stacks.Array.data[0].ItemId
       value: Ammo_1
       objectReference: {fileID: 0}
+    - target: {fileID: 6408642959263227930, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6979843500320570833, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: mainHandWeapon
       value: 
       objectReference: {fileID: 11400000, guid: 7b74f9b7f03056e4d908fc8eab1ca7de, type: 2}
+    - target: {fileID: 7739116228350785113, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739116228350785113, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739116228350785113, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743567080740706397, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743567080740706397, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743567080740706397, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.6758131
+      objectReference: {fileID: 0}
     - target: {fileID: 7987166543675781119, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: m_Sprite
       value: 

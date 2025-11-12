@@ -38,8 +38,6 @@ public class CureStatusItemSO : ConsumableItemSO
 
         
     }
-
-    // Optional: keep ItemSO’s DisplayName/Icon in sync with overrides
     private new void OnValidate()
     {
         base.OnValidate(); // sets Kind/stack rules
