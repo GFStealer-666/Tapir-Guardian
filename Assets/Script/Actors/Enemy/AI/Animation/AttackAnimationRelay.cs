@@ -24,7 +24,5 @@ public class AttackAnimationRelay : MonoBehaviour
     {
         var ctrl = GetComponent<EnemyController>();
         if (ctrl) ctrl.enabled = false;
-        var anim = GetComponentInChildren<Animator>();
-        if (anim) anim.enabled = false;
     }
 }

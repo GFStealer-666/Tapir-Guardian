@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public enum ItemKind { Misc, WeaponMelee, WeaponGun, Ammo, Consumable, CraftingMaterial }
-public enum EquipSlot { MainHand, SideHand }
+
 
 public abstract class ItemSO : ScriptableObject
 {

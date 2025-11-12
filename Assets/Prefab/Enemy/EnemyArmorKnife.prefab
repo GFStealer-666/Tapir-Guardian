@@ -209,7 +209,7 @@ Rigidbody2D:
   m_Mass: 5.6196465
   m_LinearDamping: 0
   m_AngularDamping: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -616,6 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Iblock: {fileID: 0}
+  immuneTo: 
 --- !u!114 &326288393584222437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 7900690350099483920}
-  config: {fileID: 11400000, guid: ca0a0f6aec4f35645a3da6b6ed869c76, type: 2}
+  config: {fileID: 11400000, guid: ae9fc5fcf44774c4b9b9984c4e2e1914, type: 2}
   fillHealthOnApply: 1
 --- !u!114 &236326252297317756
 MonoBehaviour:
@@ -658,11 +659,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c7338149f56f149bbdb4250f988df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPrefab: {fileID: 5851061578017104260, guid: bca3062d57d85bc428a7c4d3165fd90b, type: 3}
+  dropPrefab: {fileID: 5851061578017104260, guid: 01688a865f820d042878c4500a0db748, type: 3}
   itemData: {fileID: 11400000, guid: 126b28500faf3c6489615b831f86bffb, type: 2}
   minAmount: 1
   maxAmount: 1
   itemCount: 5
-  dropChance: 0
+  dropChance: 0.1
   scatterForce: 2
   upwardForce: 1

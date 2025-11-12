@@ -1634,7 +1634,7 @@ GameObject:
   - component: {fileID: 3746065020468223753}
   - component: {fileID: 1832772254019039097}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: Slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2032,7 +2032,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9079824313227647148}
   - component: {fileID: 6268778523847111471}
-  - component: {fileID: 5714463025271606885}
   - component: {fileID: 6979843500320570833}
   m_Layer: 0
   m_Name: PlayerInventory
@@ -2073,20 +2072,12 @@ MonoBehaviour:
   stacks:
   - ItemId: Ammo_2
     Count: 2
+  - ItemId: CraftingMaterial_1
+    Count: 3
+  - ItemId: CraftingMaterial_2
+    Count: 3
   - ItemId: ConsumableItem_3
     Count: 1
---- !u!114 &5714463025271606885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952936658502958118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5bf2da0a93c80641872c7aeee6a7321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6979843500320570833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2765,12 +2756,12 @@ GameObject:
   - component: {fileID: 2018812233928961766}
   - component: {fileID: 6921794737903379584}
   m_Layer: 0
-  m_Name: RangeItem
+  m_Name: Slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7583141492318473484
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2786,10 +2777,10 @@ RectTransform:
   - {fileID: 261428073550000546}
   m_Father: {fileID: 3998219039728474742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 75, y: -250.68921}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6992621085077016243
 CanvasRenderer:
@@ -3082,6 +3073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Iblock: {fileID: 5149076111795294103}
+  immuneTo: 
 --- !u!114 &3332319695609487639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3667,6 +3659,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5769612627590268507}
   - {fileID: 767686898115029520}
   - {fileID: 7306521684526006699}
   - {fileID: 3634850559753927754}
@@ -4881,7 +4874,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3998219039728474742}
   - component: {fileID: 7861614910596778305}
-  - component: {fileID: 1774017960718422304}
   m_Layer: 0
   m_Name: InventoryButtonParent
   m_TagString: Untagged
@@ -4934,24 +4926,6 @@ MonoBehaviour:
   m_Spacing: {x: 40, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 2
---- !u!114 &1774017960718422304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4505243380576905305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8084f437ce3467d419316f6e8d941e34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipment: {fileID: 6979843500320570833}
-  mainHandImage: {fileID: 7987166543675781119}
-  sideHandImage: {fileID: 0}
-  mainHighlight: {fileID: 0}
-  sideHighlight: {fileID: 0}
-  activeSlot: 0
 --- !u!1 &4553792766696495704
 GameObject:
   m_ObjectHideFlags: 0
@@ -6716,10 +6690,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputReaderBehaviour: {fileID: 9218700398966386966}
   blocker: {fileID: 5149076111795294103}
-  weaponDriver: {fileID: 4988416371349245704}
   healthComponent: {fileID: 5720880399696536130}
-  equipment: {fileID: 6979843500320570833}
-  hotbar: {fileID: 5714463025271606885}
+  weaponDriver: {fileID: 4988416371349245704}
+  weaponSelectorController: {fileID: 7062051335133285863}
+  equipment: {fileID: 4247702429950730774}
   scanner: {fileID: 8556337782218433161}
   controlLock: {fileID: 7355675067628425100}
   sfx: {fileID: 7099183586756099725}
@@ -6768,6 +6742,9 @@ MonoBehaviour:
   block: {fileID: -1647714448705292980, guid: 5ee5ba899cb70a046b500e8ccb3a23b3, type: 3}
   shoot: {fileID: 6496499331192969666, guid: 5ee5ba899cb70a046b500e8ccb3a23b3, type: 3}
   interact: {fileID: 3235111665504871047, guid: 5ee5ba899cb70a046b500e8ccb3a23b3, type: 3}
+  slot1: {fileID: 4522386260458976101, guid: 5ee5ba899cb70a046b500e8ccb3a23b3, type: 3}
+  slot2: {fileID: 1087433919980703706, guid: 5ee5ba899cb70a046b500e8ccb3a23b3, type: 3}
+  slotScroll: {fileID: 0}
 --- !u!114 &7355675067628425100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8378,7 +8355,7 @@ GameObject:
   - component: {fileID: 1322914812435509723}
   - component: {fileID: 2658520949605049829}
   m_Layer: 0
-  m_Name: PlayerCraftingUI
+  m_Name: PlayerCrafting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8435,7 +8412,7 @@ MonoBehaviour:
   menuRoot: {fileID: 8146588555496675921}
   recipes:
   - {fileID: 11400000, guid: 8360c87cda3d8154e8af5494214e9dc3, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 3882d8991ec7f14459fd07b61c23ced5, type: 2}
   listContent: {fileID: 927332014772227706}
   listItemPrefab: {fileID: 3527505546491642365, guid: 3fc807646fd6c264eb59e0a99fd02984, type: 3}
   detailPanel: {fileID: 7782777181583470240}
@@ -9844,6 +9821,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   presenterBehaviour: {fileID: 3717902792280767129}
   _running: 0
+--- !u!1 &8020656599057681742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5769612627590268507}
+  - component: {fileID: 2359238012880832669}
+  - component: {fileID: 5535834249509514932}
+  m_Layer: 7
+  m_Name: PlayerEquipment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5769612627590268507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020656599057681742}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 255767579202696181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2359238012880832669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020656599057681742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b6bae4ba2ac4945bd0bd630a82c871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipmentProvider: {fileID: 1442671914035715508}
+  weaponSelector: {fileID: 7062051335133285863}
+  hud: {fileID: 5535834249509514932}
+--- !u!114 &5535834249509514932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020656599057681742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943b8fd667debd549aa911c95228b2fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot1Button: {fileID: 1832772254019039097}
+  slot2Button: {fileID: 6921794737903379584}
+  selectedColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8125195063189880852
 GameObject:
   m_ObjectHideFlags: 0
@@ -10219,6 +10260,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9037374532182979030}
   - component: {fileID: 4988416371349245704}
+  - component: {fileID: 7062051335133285863}
+  - component: {fileID: 1442671914035715508}
+  - component: {fileID: 4247702429950730774}
   m_Layer: 0
   m_Name: PlayerAttack
   m_TagString: Untagged
@@ -10253,16 +10297,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8b69385f4994d4689bd8148af356d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainHand: {fileID: 11400000, guid: e51f25bea89bf1c4e9a4c485548acf6a, type: 2}
-  sideHand: {fileID: 11400000, guid: 3d2f30fd4f6c957449873a0851b1cde9, type: 2}
+  selectorBehaviour: {fileID: 7062051335133285863}
+  equipmentProvider: {fileID: 1442671914035715508}
   anim2D: {fileID: 4917185053286916730}
+  animator: {fileID: 8760445751397677769}
   sfx: {fileID: 7099183586756099725}
   meleeOrigin: {fileID: 4966450517315309499}
   firePointRight: {fileID: 1689657255991430951}
   firePointLeft: {fileID: 6916996089628710112}
   inventory: {fileID: 6268778523847111471}
-  dryFireSound: {fileID: 0}
   bulletsPerShot: 1
+  driveAnimator: 1
+  meleeTrigger: Attack
+  rangedTrigger: Shoot
+  eventTimeout: 1.5
+  bufferWindow: 0.2
+  dryFireLockout: 0.2
+--- !u!114 &7062051335133285863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286171469668405170}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a22d19a52c7324787ffb95d3353be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipmentProvider: {fileID: 1442671914035715508}
+  readPlayerInput: 0
+--- !u!114 &1442671914035715508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286171469668405170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af356b928569e164aa90827c78167e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipment: {fileID: 4247702429950730774}
+--- !u!114 &4247702429950730774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286171469668405170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1f72e30be670b44b40f777587bba7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainHandWeapon: {fileID: 0}
+  sideHandWeapon: {fileID: 11400000, guid: 3d2f30fd4f6c957449873a0851b1cde9, type: 2}
 --- !u!1 &8314801188642053250
 GameObject:
   m_ObjectHideFlags: 0
@@ -12075,6 +12166,22 @@ PrefabInstance:
     - target: {fileID: 7979112110647257073, guid: 32a155994c98bc94a95ee276d6d86756, type: 3}
       propertyPath: m_fontSize
       value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979112110647257073, guid: 32a155994c98bc94a95ee276d6d86756, type: 3}
+      propertyPath: m_margin.w
+      value: 1.90448
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979112110647257073, guid: 32a155994c98bc94a95ee276d6d86756, type: 3}
+      propertyPath: m_margin.x
+      value: 16.187378
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979112110647257073, guid: 32a155994c98bc94a95ee276d6d86756, type: 3}
+      propertyPath: m_margin.y
+      value: 10.474121
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979112110647257073, guid: 32a155994c98bc94a95ee276d6d86756, type: 3}
+      propertyPath: m_margin.z
+      value: 18.091675
       objectReference: {fileID: 0}
     - target: {fileID: 7979112110647257073, guid: 32a155994c98bc94a95ee276d6d86756, type: 3}
       propertyPath: m_fontStyle

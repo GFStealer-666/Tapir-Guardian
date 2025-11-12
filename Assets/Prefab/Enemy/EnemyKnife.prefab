@@ -58,7 +58,7 @@ Rigidbody2D:
   m_Mass: 4.9315205
   m_LinearDamping: 0.5
   m_AngularDamping: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -456,6 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Iblock: {fileID: 0}
+  immuneTo: 
 --- !u!114 &8803555820161514728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,12 +499,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c7338149f56f149bbdb4250f988df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPrefab: {fileID: 5851061578017104260, guid: bca3062d57d85bc428a7c4d3165fd90b, type: 3}
+  dropPrefab: {fileID: 5851061578017104260, guid: 01688a865f820d042878c4500a0db748, type: 3}
   itemData: {fileID: 11400000, guid: 126b28500faf3c6489615b831f86bffb, type: 2}
   minAmount: 1
   maxAmount: 1
   itemCount: 5
-  dropChance: 0
+  dropChance: 0.03
   scatterForce: 2
   upwardForce: 1
 --- !u!1 &6431543607569715821
@@ -550,7 +551,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 08b46e91cd6c8a7499e3c45c5c72321d, type: 3}
   m_Resource: {fileID: 8300000, guid: 08b46e91cd6c8a7499e3c45c5c72321d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

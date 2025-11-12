@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbe4c2c04256674a92f10103c565ba1, type: 3}
   m_Name: "\u0E1C\u0E49\u0E32"
   m_EditorClassIdentifier: 
-  Id: CraftingMaterial_1
-  DisplayName: Rag
+  Id: CraftingMaterial_2
+  DisplayName: "\u0E1C\u0E49\u0E32"
   Description: "\u0E1C\u0E49\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E41\u0E1C\u0E25"
   Icon: {fileID: 21300000, guid: 0d86c4ae8ca199a48b69501da05a1f86, type: 3}
   Kind: 5

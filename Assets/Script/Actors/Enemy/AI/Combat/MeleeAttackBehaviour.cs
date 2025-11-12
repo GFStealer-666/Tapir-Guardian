@@ -121,7 +121,7 @@ public class MeleeAttackBehaviour : MonoBehaviour,
         {
             var data = new DamageData(attack, DamageType.Melee, gameObject, true);
             d.ReceiveDamage(in data);
-            PlayHitSfx(); // ✅ play on successful hit
+            PlayHitSfx();
         }
     }
 

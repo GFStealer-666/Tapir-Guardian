@@ -1,18 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-/// Make the tapir run left and leave the scene after a signal.
-[RequireComponent(typeof(Animator))]
+[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 public class AnimalAnimation : MonoBehaviour
 {
     [Header("Animation")]
-    [Tooltip("Animator parameter to trigger run animation.")]
-    public string runParam = "IsRunning";     // Bool or Trigger
-    public bool runParamIsTrigger = false;
-
-    [Tooltip("Animator parameter for idle animation (optional). Leave empty if handled automatically.")]
-    public string idleParam = "IsIdle";       // optional Bool, leave blank if not used
+    public string runParam = "IsRunning";   // Bool
+    public bool runParamIsTrigger = false;  // leave false (Bool)
+    public string idleParam = "IsIdle";     // optional
 
     [Header("Movement")]
     [SerializeField, Min(0.1f)] private float runSpeed = 5f;
@@ -20,10 +16,7 @@ public class AnimalAnimation : MonoBehaviour
     [SerializeField] private bool zeroGravityWhileRunning = true;
 
     [Header("Destination")]
-    [Tooltip("The point the tapir should run to.")]
     public Transform targetPoint;
-
-    [Tooltip("Distance threshold to stop running (in world units).")]
     [SerializeField] private float stopDistance = 0.1f;
 
     [Header("Collision")]
@@ -34,66 +27,63 @@ public class AnimalAnimation : MonoBehaviour
     SpriteRenderer _sr;
     Collider2D[] _cols;
     bool _escaping;
+    float _savedGravity;
 
     void Awake()
     {
-        _anim = GetComponent<Animator>();
+        _anim = GetComponentInChildren<Animator>();      // Animator on child (Visual)
         _rb   = GetComponent<Rigidbody2D>();
         _sr   = GetComponentInChildren<SpriteRenderer>();
         _cols = GetComponentsInChildren<Collider2D>();
     }
 
-    /// Call this when the event is triggered (for example, cage opened)
     public void TriggerEscape()
     {
-        if (!_escaping && targetPoint)
-            StartCoroutine(EscapeRoutine());
+        if (_escaping || !targetPoint) return;
+        StartCoroutine(EscapeRoutine());
     }
 
     IEnumerator EscapeRoutine()
     {
         _escaping = true;
 
-        // Setup
+        // setup
+        _savedGravity = _rb.gravityScale;
         if (zeroGravityWhileRunning) _rb.gravityScale = 0f;
         if (disableCollidersWhileRunning) foreach (var c in _cols) c.enabled = false;
 
         Vector3 targetPos = targetPoint.position;
         bool runningLeft = targetPos.x < transform.position.x;
 
-        if (_sr && flipXWhenRunningLeft)
-            _sr.flipX = runningLeft;
+        if (_sr && flipXWhenRunningLeft) _sr.flipX = runningLeft;
 
-        // Start run animation
+        // start run animation
         if (_anim)
         {
             if (runParamIsTrigger) _anim.SetTrigger(runParam);
             else _anim.SetBool(runParam, true);
+            if (!string.IsNullOrEmpty(idleParam)) _anim.SetBool(idleParam, false);
         }
 
-        // Move until near target
+        // move with physics
+        // Use velocity (simple). If you prefer MovePosition, swap the block below.
         while (Vector2.Distance(transform.position, targetPos) > stopDistance)
         {
             float dir = runningLeft ? -1f : 1f;
-            _rb.linearVelocity = new Vector2(dir * runSpeed, 0f);
-            yield return null;
+            _rb.linearVelocity = new Vector2(dir * runSpeed, 0f);   // << fixed here
+            yield return null; // or WaitForFixedUpdate() if using MovePosition
         }
 
-        // Stop
+        // stop
         _rb.linearVelocity = Vector2.zero;
 
-        // Back to idle
-        if (_anim)
-        {
-            if (!runParamIsTrigger)
-                _anim.SetBool(runParam, false);
-            if (!string.IsNullOrEmpty(idleParam))
-                _anim.SetBool(idleParam, true);
-        }
+        // back to idle
+        if (_anim && !runParamIsTrigger) _anim.SetBool(runParam, false);
+        if (_anim && !string.IsNullOrEmpty(idleParam)) _anim.SetBool(idleParam, true);
 
-        // Restore colliders
-        if (disableCollidersWhileRunning)
-            foreach (var c in _cols) c.enabled = true;
+        // restore
+        if (disableCollidersWhileRunning) foreach (var c in _cols) c.enabled = true;
+        if (zeroGravityWhileRunning) _rb.gravityScale = _savedGravity;
 
         _escaping = false;
     }

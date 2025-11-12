@@ -240,7 +240,7 @@ Rigidbody2D:
   m_Mass: 5.0824
   m_LinearDamping: 0.5
   m_AngularDamping: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -416,6 +416,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 128
+  damageType: 1
   fireTiming: 0
   animator: {fileID: 140062926906256105}
   attackTrigger: Attack
@@ -488,6 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Iblock: {fileID: 0}
+  immuneTo: 
 --- !u!114 &4173511939877819294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,7 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 8767666745022744760}
-  config: {fileID: 11400000, guid: ca0a0f6aec4f35645a3da6b6ed869c76, type: 2}
+  config: {fileID: 11400000, guid: fa745fec7697980418e1c24ef48c1a76, type: 2}
   fillHealthOnApply: 1
 --- !u!114 &6535910105564108663
 MonoBehaviour:

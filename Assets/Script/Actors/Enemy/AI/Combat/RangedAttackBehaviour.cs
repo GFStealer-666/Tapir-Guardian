@@ -17,6 +17,9 @@ public class RangedAttackBehaviour : MonoBehaviour,
     [SerializeField] private float fireCooldown = 0.6f;
     [SerializeField] private LayerMask targetMask;
 
+    [Header("Damage")]
+    [SerializeField] private DamageType damageType = DamageType.Ranged; // <<< customize in Inspector
+
     [Header("Timing")]
     [SerializeField] private HitTiming fireTiming = HitTiming.AnimationEvent; // use AnimationEvent
 
@@ -130,7 +133,8 @@ public class RangedAttackBehaviour : MonoBehaviour,
     private void FireNow(Vector2 origin, Vector2 dir)
     {
         var b = Instantiate(bulletPrefab, origin, Quaternion.identity);
-        b.Configure(attack, dir * bulletSpeed, gameObject, 3.0f, targetMask);
+        // Pass DamageType to bullet:
+        b.Configure(attack, dir * bulletSpeed, gameObject, 3.0f, targetMask, damageType);
     }
 
     private void PlayFireSfx()

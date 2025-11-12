@@ -8,7 +8,8 @@ public struct InputSnapshot
     public bool BlockPressed;
     public bool ShootPressed;
     public bool ShootHeld;
-
-    public bool InteractPressed;   // <-- NEW (E key)
-    public int HotbarPressedIndex; // you already had this in PlayerBrain
+    public bool Slot1Pressed;
+    public bool Slot2Pressed;
+    public bool InteractPressed;
+    public float ScrollDeltaY;
 }

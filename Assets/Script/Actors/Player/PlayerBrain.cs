@@ -10,18 +10,19 @@ public class PlayerBrain : MonoBehaviour
     [Header("Gameplay refs")]
     [SerializeField] private IMover2D mover;
     [SerializeField] private BlockComponent blocker;
-    [SerializeField] private WeaponDriver weaponDriver;
     [SerializeField] private HealthComponent healthComponent;
+    [Header("Equipment/Combat")]
+    [SerializeField] private WeaponDriver weaponDriver;
+    [SerializeField] private WeaponSelectorController weaponSelectorController;
 
     [Header("Inventory/Eq/Hotbar")]
     [SerializeField] private EquipmentComponent equipment;
-    [SerializeField] private HotbarComponent hotbar;
-
     [Header("Interact")]
     [SerializeField] private InteractionScanner scanner;
 
     [Header("Control Lock")]
     [SerializeField] private PlayerControlLock controlLock;
+    [SerializeField] private bool lockPlayerOnStart = false;
 
     [Header("Audio")]
     [SerializeField] private PlayerAudioSoundEffect sfx;
@@ -42,19 +43,18 @@ public class PlayerBrain : MonoBehaviour
     private void Awake()
     {
 
-        if (!sfx)        sfx        = GetComponentInChildren<PlayerAudioSoundEffect>();
+        if (!sfx) sfx = GetComponentInChildren<PlayerAudioSoundEffect>();
         if (!weaponDriver) weaponDriver = GetComponentInChildren<WeaponDriver>();
-        if (!equipment)  equipment  = GetComponentInChildren<EquipmentComponent>();
-        if (!hotbar)     hotbar     = GetComponentInChildren<HotbarComponent>();
-        if (!scanner)    scanner    = GetComponentInChildren<InteractionScanner>();
+        if (!equipment) equipment = GetComponentInChildren<EquipmentComponent>();
+        if (!scanner) scanner = GetComponentInChildren<InteractionScanner>();
         if (!controlLock) controlLock = GetComponentInChildren<PlayerControlLock>();
         if (!animator2D) animator2D = GetComponentInChildren<PlayerAnimator2D>();
         if (!healthComponent) healthComponent = GetComponentInChildren<HealthComponent>();
 
         input = inputReaderBehaviour as IInputReader;
 
-        mover   ??= GetComponent<IMover2D>() ?? GetComponentInParent<IMover2D>();
-    
+        mover ??= GetComponent<IMover2D>() ?? GetComponentInParent<IMover2D>();
+
 
         _linearMover = mover as LinearMover;
         _rb = GetComponent<Rigidbody2D>();
@@ -63,7 +63,14 @@ public class PlayerBrain : MonoBehaviour
         {
             Debug.LogWarning($"{nameof(PlayerBrain)}: IMover2D missing.");
         }
-            
+
+    }
+    void Start()
+    {
+        if(lockPlayerOnStart)
+        {
+            SetInputBlocked(true);
+        }
     }
 
     private void Update()
@@ -100,8 +107,16 @@ public class PlayerBrain : MonoBehaviour
         // Attack (tap or hold)
         if (s.ShootPressed || s.ShootHeld)
         {
+            weaponDriver?.OnAttackInput();
+        }
 
-            weaponDriver?.TryUseMain();
+        if (s.Slot1Pressed)
+        {
+            weaponSelectorController?.SelectIndex(0);
+        }
+        if (s.Slot2Pressed)
+        {
+            weaponSelectorController?.SelectIndex(1);
         }
         // ---- Footsteps ----
         HandleFootsteps(move);
@@ -109,12 +124,16 @@ public class PlayerBrain : MonoBehaviour
         // ---- Interact ----
         if (s.InteractPressed)
         {
-            var target = scanner ? scanner.Current : null; 
-            if (target != null && target.CanInteract()) 
-            { 
-                target.Interact(this); 
-            } 
+            var target = scanner ? scanner.Current : null;
+            if (target != null && target.CanInteract())
+            {
+                target.Interact(this);
+            }
         }
+        
+        const float threshold = 0.1f;
+        if (s.ScrollDeltaY > threshold)  weaponSelectorController.SelectNext(+1);
+        if (s.ScrollDeltaY < -threshold) weaponSelectorController.SelectNext(-1);
     }
 
     private void HandleFootsteps(Vector2 inputDir)
@@ -160,5 +179,9 @@ public class PlayerBrain : MonoBehaviour
             mover?.Move(Vector2.zero);
             _stepTimer = 0f;
         }
+    }
+    public void ReleasePlayerInput()
+    {
+        controlLock.InputBlocked = false;
     }
 }

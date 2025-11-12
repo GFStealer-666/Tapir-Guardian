@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Iblock: {fileID: 0}
+  immuneTo: 02000000
 --- !u!114 &3528362633058136807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 8762010902130549959}
-  config: {fileID: 11400000, guid: ca0a0f6aec4f35645a3da6b6ed869c76, type: 2}
+  config: {fileID: 11400000, guid: 5426071d1f7550f4aa961bb1e62013e6, type: 2}
   fillHealthOnApply: 1
 --- !u!114 &9141540688823121380
 MonoBehaviour:
@@ -483,7 +484,7 @@ Rigidbody2D:
   m_Mass: 5.0824
   m_LinearDamping: 0.5
   m_AngularDamping: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -659,6 +660,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 128
+  damageType: 1
   fireTiming: 0
   animator: {fileID: 3518226387081709916}
   attackTrigger: Attack
