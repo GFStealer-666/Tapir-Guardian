@@ -199,7 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4405263458330485869}
-  maxLife: 2
+  col: {fileID: 0}
+  maxLife: 1
   spriteRenderer: {fileID: 6178358431217949241}
   _hitMask:
     serializedVersion: 2

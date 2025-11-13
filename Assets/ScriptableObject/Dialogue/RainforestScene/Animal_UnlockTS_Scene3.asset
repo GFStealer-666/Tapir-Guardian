@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6bdad054db6764fa3944189ed22568, type: 3}
+  m_Name: Animal_UnlockTS_Scene3
+  m_EditorClassIdentifier: 
+  sequenceId: Scene2_AnimalUnlcoker
+  category: 1
+  loop: 0
+  lines:
+  - {fileID: 11400000, guid: 643324582372afd44934a4b262e85877, type: 2}
+  - {fileID: 11400000, guid: 4665dd12c3c6e0347a4a849808afbd63, type: 2}

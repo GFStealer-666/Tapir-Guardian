@@ -37,4 +37,21 @@ public class UIFader : MonoBehaviour
         }
         cg.alpha = 0f;
     }
+
+    public void FadeOutDoFadeIn(float outT, float inT, System.Action midAction)
+    {
+        StartCoroutine(FadeOutDoFadeInRoutine(outT, inT, midAction));
+    }
+
+    private IEnumerator FadeOutDoFadeInRoutine(float outT, float inT, System.Action midAction)
+    {
+        // Fade out
+        yield return StartCoroutine(FadeOutCoroutine(outT));
+
+        yield return new WaitForSecondsRealtime(2f);
+        midAction?.Invoke();
+
+        // Fade back in
+        yield return StartCoroutine(FadeInCoroutine(inT));
+    }
 }

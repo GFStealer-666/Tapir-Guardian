@@ -14,6 +14,8 @@ public class TapirSequence : MonoBehaviour
     [SerializeField] private float fallHeight = 3.0f;
     [SerializeField] private float fallDuration = 0.6f;
     [SerializeField] private string fallTrigger = "FallOff";
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
 
     bool _started;
 
@@ -69,11 +71,13 @@ public class TapirSequence : MonoBehaviour
     // Call this via an Animation Event on the LAST frame of the FallOff clip
     public void OnFallLanded()
     {
+        audioSource.PlayOneShot(audioClip);
         if (!runner)
         {
             Debug.LogError("[TapirSequence] Runner not assigned.");
             return;
         }
+        
         runner.TriggerEscape();
     }
 
