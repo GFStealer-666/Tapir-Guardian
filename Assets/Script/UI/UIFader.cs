@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+using System;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class UIFader : MonoBehaviour
 {
     [SerializeField] CanvasGroup cg;
-
+    [SerializeField] private float fadedelay = 3f;
+    public event Action OnFadeOutComplete;
     void Awake()
     {
         cg = GetComponent<CanvasGroup>();
@@ -47,11 +50,11 @@ public class UIFader : MonoBehaviour
     {
         // Fade out
         yield return StartCoroutine(FadeOutCoroutine(outT));
-
-        yield return new WaitForSecondsRealtime(2f);
         midAction?.Invoke();
-
+        yield return new WaitForSecondsRealtime(fadedelay);
+    
         // Fade back in
         yield return StartCoroutine(FadeInCoroutine(inT));
+        OnFadeOutComplete?.Invoke();
     }
 }

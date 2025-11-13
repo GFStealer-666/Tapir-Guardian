@@ -69,12 +69,9 @@ public class DamageReceiver : MonoBehaviour, IDamageable
         {
             blockMultiplier = Iblock.BlockMultiplier; // e.g., 0.5 for normal, maybe lower for perfect if your component handles it
         }
-
-        // --- FINAL DAMAGE ---
         int finalDamage = Mathf.Max(0, Mathf.RoundToInt(dmgAfterArmor * blockMultiplier));
-        Ihealth.TakeDamage(finalDamage);
+        Ihealth.TakeDamage(damage);
 
-        // --- FEEDBACK / EVENTS ---
         if (didBlock)
         {
             OnBlocked?.Invoke(false);

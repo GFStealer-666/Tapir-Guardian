@@ -24,6 +24,7 @@ public class EnemyAnimator2D : MonoBehaviour
     [SerializeField] private string attackTrig = "Attack";
     [SerializeField] private string damagedTrig = "Damaged";
     [SerializeField] private string dieTrig = "Die";
+    [SerializeField] private string giveupTrig = "Giveup";
 
     [Header("Motion → Walk")]
     [SerializeField, Range(0.0f, 0.2f)] private float movingThreshold = 0.02f;
@@ -65,6 +66,8 @@ public class EnemyAnimator2D : MonoBehaviour
         {
             hc.OnHealthChanged += (_, __) => animator.SetTrigger(hDmg);
             hc.OnDied += HandleDied;
+
+            hc.OnNonLethalKO += HandleNonLethalKO;
         }
     }
 
@@ -74,6 +77,7 @@ public class EnemyAnimator2D : MonoBehaviour
         if (root?.health is HealthComponent hc)
         {
             hc.OnDied -= HandleDied;
+            hc.OnNonLethalKO -= HandleNonLethalKO;
         }
     }
 
@@ -105,10 +109,24 @@ public class EnemyAnimator2D : MonoBehaviour
 
         // stop AI & movement
         var ctrl = GetComponent<EnemyController>();
-        if (ctrl) ctrl.enabled = false;
         if (root?.Mover != null) root.Mover.Move(Vector2.zero);
 
-        // make colliders pass-through (or disable them)
+        foreach (var c in GetComponentsInChildren<Collider2D>(true))
+        {
+            // choose ONE:
+            c.isTrigger = true;
+            // c.enabled = false;
+        }
+    }
+
+    void HandleNonLethalKO()
+    {
+        animator.ResetTrigger(hDmg);
+
+        animator.SetTrigger(giveupTrig); 
+        var ctrl = GetComponent<EnemyController>();
+        if (root?.Mover != null) root.Mover.Move(Vector2.zero);
+
         foreach (var c in GetComponentsInChildren<Collider2D>(true))
         {
             // choose ONE:

@@ -8578,8 +8578,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 183.02234, y: -0.50949097}
-  m_SizeDelta: {x: -475.3869, y: -308.7032}
+  m_AnchoredPosition: {x: 210.7417, y: -25.1489}
+  m_SizeDelta: {x: -530.8256, y: -357.9819}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6597174629499348099
 CanvasRenderer:
@@ -8604,13 +8604,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: -66
+    m_Top: 15
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 1
   m_StartAxis: 0
-  m_CellSize: {x: 300, y: 300}
-  m_Spacing: {x: 0, y: -120}
+  m_CellSize: {x: 600, y: 150}
+  m_Spacing: {x: 0, y: 60}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &6576279408351328075
@@ -11479,7 +11479,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4541b94861472a141b2b7c1f3afb38e8, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12484,6 +12484,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3608536165913377309, guid: cd337877be34df940b0175b6b74d04a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613348666495558934, guid: cd337877be34df940b0175b6b74d04a5, type: 3}
+      propertyPath: m_BlocksRaycasts
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5399782022850616693, guid: cd337877be34df940b0175b6b74d04a5, type: 3}

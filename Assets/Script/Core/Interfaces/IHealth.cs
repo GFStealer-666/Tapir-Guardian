@@ -6,6 +6,8 @@ public interface IHealth
     int MaxHealth { get; }
 
     void TakeDamage(int dmg);
+    void TakeDamage(in DamageData data);
+    void ApplyDamage(int dmg, DamageType type);
     void Heal(int heal);
 
     static event Action<int, int> OnHealthChanged;

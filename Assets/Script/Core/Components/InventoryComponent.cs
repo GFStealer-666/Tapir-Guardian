@@ -81,7 +81,7 @@ public class InventoryComponent : MonoBehaviour,IItemUseTargetProvider
                 if (s.Count <= 0) { stacks.RemoveAt(i); i--; }
                 else stacks[i] = s;
             }
-            bool ok = need == 0;
+            bool ok = need == 0; 
             if (ok) OnItemChanged?.Invoke();
             return ok;
         }

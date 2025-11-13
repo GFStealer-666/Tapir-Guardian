@@ -65,6 +65,14 @@ public class PlayerBrain : MonoBehaviour
         }
 
     }
+    void OnEnable()
+    {
+        healthComponent.OnDied += () =>
+        {
+            SetInputBlocked(true);
+        };
+    }
+
     void Start()
     {
         if(lockPlayerOnStart)

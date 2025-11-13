@@ -19,10 +19,12 @@ public class EnemyRoot : MonoBehaviour
     void OnEnable()
     {
         health.OnDied += Died;
+        health.OnNonLethalKO += Died;
     }
     void OnDisable()
     {
         health.OnDied -= Died;
+        health.OnNonLethalKO -= Died;
     }
     void Awake()
     {
@@ -49,5 +51,6 @@ public class EnemyRoot : MonoBehaviour
         boxCollider.isTrigger = true;
         Debug.Log($"{gameObject.name} EnemyRoot Died");
     }
+
     
 }

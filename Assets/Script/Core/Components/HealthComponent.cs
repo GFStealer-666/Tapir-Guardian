@@ -11,6 +11,7 @@ public class HealthComponent : MonoBehaviour, IHealth,IConfigurableHealth
     public event Action<int, int> OnHealthChanged;
     public event Action OnTakenDamaged;
     public event Action OnDied;
+    public event Action OnNonLethalKO;
     public bool IsDead => currentHealth <= 0;
     [Header("Debug Only")]
     [SerializeField] private int damageHealth = 40;
@@ -28,14 +29,34 @@ public class HealthComponent : MonoBehaviour, IHealth,IConfigurableHealth
     public void TakeDamage(int amount)
     {
         if (amount <= 0 || currentHealth <= 0) return;
+        ApplyDamage(amount, DamageType.NonLethal); // default type
+    }
+    public void TakeDamage(in DamageData data)
+    {
+        if (data.RawDamage <= 0 || currentHealth <= 0) return;
+        ApplyDamage(data.RawDamage, data.Type);
+    }
+    private void ApplyDamage(int amount, DamageType type)
+    {
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        Debug.Log($"{gameObject.name} took {amount} damage. Current HP = {currentHealth}/{maxHealth}");
+        Debug.Log($"{gameObject.name} took {amount} damage ({type}). HP = {currentHealth}/{maxHealth}");
+
         if (currentHealth <= 0)
         {
-            OnDied?.Invoke();
-            Debug.Log($"{gameObject.name} has died.");
+            if (type == DamageType.NonLethal)
+            {
+                // Non-lethal knockout instead of death
+                OnNonLethalKO?.Invoke();
+                Debug.Log($"{gameObject.name} was knocked out (non-lethal).");
+            }
+            else
+            {
+                OnDied?.Invoke();
+                Debug.Log($"{gameObject.name} has died.");
+            }
         }
+
         OnTakenDamaged?.Invoke();
     }
     public void Heal(int amount)
@@ -66,5 +87,14 @@ public class HealthComponent : MonoBehaviour, IHealth,IConfigurableHealth
         Heal(10);
         Debug.Log($"[HealthComponent] Healed 10. Current HP = {currentHealth}/{maxHealth}", this);
     }
-#endregion
+
+    void IHealth.ApplyDamage(int dmg, DamageType type)
+    {
+        ApplyDamage(dmg, type);
+    }
+    void IHealth.TakeDamage(in DamageData data)
+    {
+        TakeDamage(data);
+    }
+    #endregion
 }

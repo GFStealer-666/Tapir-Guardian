@@ -21,6 +21,18 @@ public class InventoryMenuController : MonoBehaviour
     private InventorySlotUI selected;
 
     // ----- Hook these from your Open/Close buttons -----
+
+    void OnEnable()
+    {
+        inventory.OnItemChanged += () =>
+        {
+            if (menuRoot && menuRoot.activeSelf)
+            {
+                BuildGrid();
+                SelectFirst();
+            }
+        };
+    }
     public void Open()
     {
         if (!menuRoot) return;
