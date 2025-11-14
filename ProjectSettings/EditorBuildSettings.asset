@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/DeepForestScene.unity
     guid: 3d6d8e1e4789b2741b17dc2d85b2003b
   - enabled: 1
+    path: Assets/Scenes/FieldScene.unity
+    guid: be3cd9d6bf9ca00469fdca22e3c9a0a9
+  - enabled: 1
     path: Assets/Scenes/Gameover.unity
     guid: 1ff8ecb086a02a54099f8e95f36ff52a
   - enabled: 1

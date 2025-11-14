@@ -1861,7 +1861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6494125826354534746, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -273.9
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6979843500320570833, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: mainHandWeapon
@@ -1869,7 +1869,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 7b74f9b7f03056e4d908fc8eab1ca7de, type: 2}
     - target: {fileID: 7295064574210780304, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7397651859530594612, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2048,6 +2048,7 @@ PrefabInstance:
     - {fileID: 598052428689381791, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
     - {fileID: 7951601295515117392, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
     - {fileID: 1439670882736472936, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+    - {fileID: 6424539101606943878, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
