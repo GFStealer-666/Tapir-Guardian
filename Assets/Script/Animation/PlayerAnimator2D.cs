@@ -39,7 +39,8 @@ public class PlayerAnimator2D : MonoBehaviour
     static readonly int IsBlockingHash= Animator.StringToHash("IsBlocking");
     static readonly int IsDeadHash    = Animator.StringToHash("IsDead");
     static readonly int AttackHash    = Animator.StringToHash("Attack");
-    static readonly int RangedHash    = Animator.StringToHash("Ranged");
+    static readonly int HandgunHash    = Animator.StringToHash("Handgun");
+    static readonly int TranquilizerHash = Animator.StringToHash("Tranquilizer");
 
     private Animator anim;
     private Rigidbody2D rb2d;
@@ -63,8 +64,8 @@ public class PlayerAnimator2D : MonoBehaviour
             weaponDriver.OnRangedStarted += HandleRanged;
             weaponDriver.OnMeleeStarted  += () => _suppressFacing = true;
             weaponDriver.OnMeleeImpact   += () => _suppressFacing = false;
-            weaponDriver.OnRangedStarted += () => _suppressFacing = true;
-            weaponDriver.OnRangedFired   += () => _suppressFacing = false;
+            weaponDriver.OnRangedStarted += (weapon) => _suppressFacing = true;
+            weaponDriver.OnRangedFired   += (weapon) => _suppressFacing = false;
         }
         if (healthComponent != null) healthComponent.OnDied += HandleDied;
     }
@@ -77,8 +78,8 @@ public class PlayerAnimator2D : MonoBehaviour
             weaponDriver.OnRangedStarted -= HandleRanged;
             weaponDriver.OnMeleeStarted  -= () => _suppressFacing = true;  // use named handlers if you enable these
             weaponDriver.OnMeleeImpact   -= () => _suppressFacing = false;
-            weaponDriver.OnRangedStarted -= () => _suppressFacing = true;
-            weaponDriver.OnRangedFired   -= () => _suppressFacing = false;
+            weaponDriver.OnRangedStarted -= (weapon) => _suppressFacing = true;
+            weaponDriver.OnRangedFired   -= (weapon) => _suppressFacing = false;
         }
         if (healthComponent != null) healthComponent.OnDied -= HandleDied;
     }
@@ -132,13 +133,27 @@ public class PlayerAnimator2D : MonoBehaviour
 
     // === Public API (call these from gameplay) ===
     public void TriggerMelee()  => anim.SetTrigger(AttackHash);
-    public void TriggerRanged() => anim.SetTrigger(RangedHash);
+    public void TriggerRanged() => anim.SetTrigger(HandgunHash);
     public void SetBlocking(bool on) => anim.SetBool(IsBlockingHash, on);
     public void SetDead(bool dead)   => anim.SetBool(IsDeadHash, dead);
 
     // === Event handlers (if wired) ===
     private void HandleMelee()  => TriggerMelee();
-    private void HandleRanged() => TriggerRanged();
+    private void HandleRanged(WeaponSO weapon)
+    {
+        switch(weapon.Id)
+        {
+            case "Handgun_1":
+                anim.SetTrigger(HandgunHash);
+                break;
+            case "Tranquilizer":
+                anim.SetTrigger(TranquilizerHash);
+                break;
+            default:
+                anim.SetTrigger(HandgunHash);
+                break;
+        }
+    }
     private void HandleDied()  => SetDead(true);
     public int FacingSign => faceDir; // +1 right, -1 left
 }

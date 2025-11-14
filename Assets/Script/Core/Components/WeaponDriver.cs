@@ -45,8 +45,8 @@ public class WeaponDriver : MonoBehaviour
     // ========= Public events (keep your existing names) =========
     public event Action OnMeleeStarted;
     public event Action OnMeleeImpact;
-    public event Action OnRangedStarted;
-    public event Action OnRangedFired;
+    public event Action<WeaponSO> OnRangedStarted;
+    public event Action<WeaponSO> OnRangedFired;
 
     // ========= Internal state machine =========
     private enum DriverState { Idle, Windup, Act, Recover }
@@ -191,9 +191,9 @@ public class WeaponDriver : MonoBehaviour
                 break;
 
             case WeaponKind.Gun:
-                OnRangedStarted?.Invoke();
-                if (driveAnimator && animator && !string.IsNullOrEmpty(rangedTrigger))
-                    animator.SetTrigger(rangedTrigger);
+                OnRangedStarted?.Invoke(_activeWeapon);
+                // if (driveAnimator && animator && !string.IsNullOrEmpty(rangedTrigger))
+                //     animator.SetTrigger(rangedTrigger);
                 BeginWindup(((WeaponGunSO)w).useAnimationEvent, ((WeaponGunSO)w).windUp);
                 break;
         }
@@ -240,7 +240,7 @@ public class WeaponDriver : MonoBehaviour
                 }
 
                 DoShoot(gun);
-                OnRangedFired?.Invoke();
+                OnRangedFired?.Invoke(_activeWeapon);
                 break;
             }
         }

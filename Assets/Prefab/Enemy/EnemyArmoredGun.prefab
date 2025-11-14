@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Iblock: {fileID: 0}
-  immuneTo: 02000000
+  immuneTo: 
 --- !u!114 &3528362633058136807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +250,7 @@ MonoBehaviour:
   attackTrig: Attack
   damagedTrig: Damaged
   dieTrig: Die
+  giveupTrig: Giveup
   movingThreshold: 0.0015
   flipByVelocityX: 0
 --- !u!114 &8001799077532307145

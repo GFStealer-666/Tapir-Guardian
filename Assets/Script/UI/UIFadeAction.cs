@@ -6,7 +6,7 @@ public class UIFadeAction : MonoBehaviour
     [SerializeField] private GameObject[] objectToActivate;
     [SerializeField] private GameObject objectToDeativate;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip diggingSound , winningSound;
+    [SerializeField] private AudioClip actionSound , winningSound;
 
     void OnEnable()
     {
@@ -34,9 +34,9 @@ public class UIFadeAction : MonoBehaviour
             {
                 objectToDeativate.SetActive(false);
             }
-            if (audioSource && diggingSound)
+            if (audioSource && actionSound)
             {
-                audioSource.PlayOneShot(diggingSound);
+                audioSource.PlayOneShot(actionSound);
             }
         });
     }

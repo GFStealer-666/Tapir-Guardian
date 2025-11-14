@@ -2101,6 +2101,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 598052428689381791, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2560924445221053060, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2213,10 +2217,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6494125826354534746, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494125826354534746, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -273.9
+      objectReference: {fileID: 0}
     - target: {fileID: 6979843500320570833, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: mainHandWeapon
       value: 
       objectReference: {fileID: 11400000, guid: 7b74f9b7f03056e4d908fc8eab1ca7de, type: 2}
+    - target: {fileID: 7295064574210780304, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7397651859530594612, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2390,7 +2406,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 598052428689381791, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+    - {fileID: 7951601295515117392, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
+    - {fileID: 1439670882736472936, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b1848f1afb5ac04a9f70a5cb2806f98, type: 3}
@@ -3491,7 +3510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a477222f14097548bd8f29507df0e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textLine: {fileID: 11400000, guid: c342c92a9bc3e304d9fb92c351255a04, type: 2}
+  textLine: {fileID: 11400000, guid: c874fcda96ca0ea49b7406fcbab7cb7a, type: 2}
   priority: 2
   playerTag: Player
   oneTimeOnly: 1
@@ -4111,7 +4130,7 @@ MonoBehaviour:
   - {fileID: 932406822}
   objectToDeativate: {fileID: 951752096}
   audioSource: {fileID: 113921358}
-  diggingSound: {fileID: 8300000, guid: 2f6080be2f53f504e81c5420c9795e4e, type: 3}
+  actionSound: {fileID: 0}
   winningSound: {fileID: 8300000, guid: bf1e5315d133da04282066e8b95e5b91, type: 3}
 --- !u!114 &975203143
 MonoBehaviour:
@@ -8834,6 +8853,10 @@ PrefabInstance:
       propertyPath: playerlock
       value: 
       objectReference: {fileID: 540706459}
+    - target: {fileID: 139239785211866656, guid: 4d50da251ed719843bcc9a228d8b1f34, type: 3}
+      propertyPath: sceneToLoad
+      value: FieldScene
+      objectReference: {fileID: 0}
     - target: {fileID: 4682879865656113998, guid: 4d50da251ed719843bcc9a228d8b1f34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 186.3
